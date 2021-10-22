@@ -5,7 +5,140 @@ using Newtonsoft.Json;
 
 namespace FN_Tool_CSharp
 {
+    // FOR API IN METHOD "AES" !!!
 
+    public class AESRootobject
+    {
+        public int status { get; set; }
+        public AESData data { get; set; }
+    }
+
+    public class AESData
+    {
+        public string build { get; set; }
+        public string mainKey { get; set; }
+        public Dynamickey[] dynamicKeys { get; set; }
+        public DateTime updated { get; set; }
+    }
+
+    public class Dynamickey
+    {
+        public string pakFilename { get; set; }
+        public string pakGuid { get; set; }
+        public string key { get; set; }
+    }
+
+
+
+    // FOR API IN METHOD "Cosmetics" !!!
+    public class CosmeticsRootobject
+    {
+        public int status { get; set; }
+        public Data data { get; set; }
+    }
+
+    public class Data
+    {
+        public string build { get; set; }
+        public string previousBuild { get; set; }
+        public DateTime date { get; set; }
+        public DateTime lastAddition { get; set; }
+        public Item[] items { get; set; }
+    }
+
+    public class Item
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public Type type { get; set; }
+        public Rarity rarity { get; set; }
+        public Series series { get; set; }
+        public Set set { get; set; }
+        public Introduction introduction { get; set; }
+        public Images images { get; set; }
+        public Variant[] variants { get; set; }
+        public object searchTags { get; set; }
+        public string[] gameplayTags { get; set; }
+        public object metaTags { get; set; }
+        public string showcaseVideo { get; set; }
+        public string dynamicPakId { get; set; }
+        public string itemPreviewHeroPath { get; set; }
+        public object displayAssetPath { get; set; }
+        public string definitionPath { get; set; }
+        public string path { get; set; }
+        public DateTime added { get; set; }
+        public DateTime[] shopHistory { get; set; }
+        public string[] builtInEmoteIds { get; set; }
+    }
+
+    public class Type
+    {
+        public string value { get; set; }
+        public string displayValue { get; set; }
+        public string backendValue { get; set; }
+    }
+
+    public class Rarity
+    {
+        public string value { get; set; }
+        public string displayValue { get; set; }
+        public string backendValue { get; set; }
+    }
+
+    public class Series
+    {
+        public string value { get; set; }
+        public string image { get; set; }
+        public string backendValue { get; set; }
+    }
+
+    public class Set
+    {
+        public string value { get; set; }
+        public string text { get; set; }
+        public string backendValue { get; set; }
+    }
+
+    public class Introduction
+    {
+        public string chapter { get; set; }
+        public string season { get; set; }
+        public string text { get; set; }
+        public int backendValue { get; set; }
+    }
+
+    public class Images
+    {
+        public string smallIcon { get; set; }
+        public string icon { get; set; }
+        public string featured { get; set; }
+        public Other other { get; set; }
+    }
+
+    public class Other
+    {
+        public string background { get; set; }
+        public string coverart { get; set; }
+    }
+
+    public class Variant
+    {
+        public string channel { get; set; }
+        public string type { get; set; }
+        public Option[] options { get; set; }
+    }
+
+    public class Option
+    {
+        public string tag { get; set; }
+        public string name { get; set; }
+        public string image { get; set; }
+    }
+
+
+
+    // FOR API IN METHOD "EventFlag" !!!
     public class Rootobject
     {
         public Channels channels { get; set; }
@@ -65,6 +198,11 @@ namespace FN_Tool_CSharp
         public DateTime activeSince { get; set; }
     }
 
+
+    // JSON CLASSES END HERE !!!
+
+    // MAIN PROGRAM STARTS HERE !!!
+
     class Program
     {
         static void AES()
@@ -76,26 +214,23 @@ namespace FN_Tool_CSharp
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
             IRestResponse jsonResponse = client.Execute(jsonRequest);
-            jsonResponse.Content = "[" + jsonResponse.Content + "]";
+            jsonResponse.Content = jsonResponse.Content;
 
-            dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
+            var json = JsonConvert.DeserializeObject<AESRootobject>(jsonResponse.Content);
 
             if (json != null)
             {
-                foreach (var data in json)
-                {
-                    Console.WriteLine($"\nServer Status: {data.status} ");
-                    Console.WriteLine($"Build: {data.data.build}");
-                    Console.WriteLine($"API Last Updated: {data.data.updated}");
+                    Console.WriteLine($"\nServer Status: {json.status} ");
+                    Console.WriteLine($"Build: {json.data.build}");
+                    Console.WriteLine($"API Last Updated: {json.data.updated}");
                     int pakchunkCount = 0;
-                    foreach (var key in data.data.dynamicKeys)
+                    foreach (var key in json.data.dynamicKeys)
                     {
                         pakchunkCount = pakchunkCount + 1;
                         Console.WriteLine($"\n{key.pakFilename}: Guid = {key.pakGuid}\n{key.pakFilename}: AES Key = {key.key}");
                     }
 
-                    Console.WriteLine($"Total Pakchunks: {pakchunkCount}");
-                }
+                    Console.WriteLine($"\n\nTotal Pakchunks: {pakchunkCount}");
             }
 
         }
@@ -108,38 +243,60 @@ namespace FN_Tool_CSharp
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
             IRestResponse jsonResponse = client.Execute(jsonRequest);
-            jsonResponse.Content = "[" + jsonResponse.Content + "]";
+            jsonResponse.Content = jsonResponse.Content;
 
-            dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
+            var json = JsonConvert.DeserializeObject<CosmeticsRootobject>(jsonResponse.Content);
 
             if (json != null)
             {
-                foreach (var data in json)
+                Console.WriteLine($"\nServer Status: {json.status}");
+                Console.WriteLine($"Date Today: {json.data.date}");
+                Console.WriteLine($"Last Addition to API: {json.data.lastAddition}");
+                Console.WriteLine($"Previous Build: {json.data.previousBuild}");
+                Console.WriteLine($"Current Build: {json.data.build}\n");
+
+                int itemcount = 0;
+                foreach (var item in json.data.items)
                 {
-                    Console.WriteLine($"\nServer Status: {data.status}");
-                    Console.WriteLine($"Previous Build: {data.data.previousBuild}");
-                    Console.WriteLine($"Current Build: {data.data.build}\n");
-                    int itemcount = 0;
-                    foreach (var item in data.data.items)
+                    itemcount = itemcount + 1;
+                    var ID = item.id;
+                    var Name = item.name;
+                    var Desc = item.description;
+                    var Rarity = item.rarity.displayValue;
+                    var BackendRarity = item.rarity.backendValue;
+                    var Icon = item.images.icon;
+                    Console.WriteLine($"\nItem Name = {Name}\nID = {ID}\nItem Description = {Desc}\nDisplay Rarity = {Rarity}\nBack End Rarity = {BackendRarity}\nDate Added = {item.added}");
+
+                    if (item.dynamicPakId != null)
                     {
-                        itemcount = itemcount + 1;
-                        var ID = item.id;
-                        var name = item.name;
-                        var desc = item.description;
-                        var rarity = item.rarity.displayValue;
-                        var backendRarity = item.rarity.backendValue;
-                        var icon = item.images.icon;
-                        Console.WriteLine($"\nItem Name = {name}\nID = {ID}\nItem Description = {desc}\nDisplay Rarity = {rarity}\nBack End Rarity = {backendRarity}");
-                        if (item.set != null)
+                        var PakID = item.dynamicPakId;
+                        Console.WriteLine($"Dynamic Pakchunk ID = {PakID}");
+                    }
+                    if (item.variants != null)
+                    {
+                        foreach (var variants in item.variants)
                         {
-                            var set1 = item.set.value;
-                            var set2 = item.set.text;
-                            Console.WriteLine($"Part of set: {set1}, {set2}");
+                            foreach (var option in variants.options)
+                            {
+                                Console.WriteLine($"Variants = {option.tag} --> {option.name}");
+                            }
                         }
                     }
-
-                    Console.WriteLine($"\nTotal cosmetics added in {data.data.build} --> {itemcount}");
+                    if (item.shopHistory != null)
+                    {
+                        foreach (var history in item.shopHistory)
+                        {
+                            Console.WriteLine($"Item Shop History = {history}");
+                        }
+                    }
+                    if (item.set != null)
+                    {
+                        var set1 = item.set.value;
+                        var set2 = item.set.text;
+                        Console.WriteLine($"Part of set = {set1}, {set2}");
+                    }
                 }
+                Console.WriteLine($"\nTotal cosmetics added in {json.data.build} --> {itemcount}");
             }
         }
         static void Notice()
