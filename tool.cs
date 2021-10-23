@@ -233,7 +233,9 @@ namespace FN_Tool_CSharp
 
     public class ServerData
     {
+        [JsonProperty("devplaytest-prod12")]
         public DevplaytestProd12 devplaytestprod12 { get; set; }
+        [JsonProperty("releaseplaytest-prod")]
         public ReleaseplaytestProd releaseplaytestprod { get; set; }
         public Stage stage { get; set; }
     }
@@ -542,9 +544,8 @@ namespace FN_Tool_CSharp
 
             if (json != null)
             {
-                Console.WriteLine($"Server Status: {json.status}");
-
-                if (json.data != null)
+                Console.WriteLine($"Server Status: {json.status}\n\n");
+                if (json.data.devplaytestprod12 != null)
                 {
                     Console.WriteLine("DevPlaytestProd12: \n\n");
                     var CLN = json.data.devplaytestprod12.cln;
@@ -559,7 +560,41 @@ namespace FN_Tool_CSharp
                     Console.WriteLine($"Module = {ModuleName}");
                     Console.WriteLine($"Build DateTime = {json.data.devplaytestprod12.buildDate}");
                     Console.WriteLine($"Version = {Version}");
-                    Console.WriteLine($"Branch = {Branch}");
+                    Console.WriteLine($"Branch = {Branch}\n\n");
+                }
+                if (json.data.releaseplaytestprod != null)
+                {
+                    Console.WriteLine("ReleasePlayTestProd: \n\n");
+                    var CLN = json.data.releaseplaytestprod.cln;
+                    var Build = json.data.releaseplaytestprod.build;
+                    var ModuleName = json.data.releaseplaytestprod.moduleName;
+                    var Version = json.data.releaseplaytestprod.version;
+                    var Branch = json.data.releaseplaytestprod.branch;
+                    Console.WriteLine($"App = {json.data.releaseplaytestprod.app}");
+                    Console.WriteLine($"Server DateTime = {json.data.releaseplaytestprod.serverDate}");
+                    Console.WriteLine($"CLN = {CLN}");
+                    Console.WriteLine($"Build = {Build}");
+                    Console.WriteLine($"Module = {ModuleName}");
+                    Console.WriteLine($"Build DateTime = {json.data.releaseplaytestprod.buildDate}");
+                    Console.WriteLine($"Version = {Version}");
+                    Console.WriteLine($"Branch = {Branch}\n\n");
+                }
+                if (json.data.stage != null)
+                {
+                    Console.WriteLine("Stage: \n\n");
+                    var CLN = json.data.stage.cln;
+                    var Build = json.data.stage.build;
+                    var ModuleName = json.data.stage.moduleName;
+                    var Version = json.data.stage.version;
+                    var Branch = json.data.stage.branch;
+                    Console.WriteLine($"App = {json.data.stage.app}");
+                    Console.WriteLine($"Server DateTime = {json.data.stage.serverDate}");
+                    Console.WriteLine($"CLN = {CLN}");
+                    Console.WriteLine($"Build = {Build}");
+                    Console.WriteLine($"Module = {ModuleName}");
+                    Console.WriteLine($"Build DateTime = {json.data.stage.buildDate}");
+                    Console.WriteLine($"Version = {Version}");
+                    Console.WriteLine($"Branch = {Branch}\n\n");
                 }
             }
         }
