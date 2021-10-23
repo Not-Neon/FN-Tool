@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 
 namespace FN_Tool_CSharp
 {
-    // FOR API IN METHOD "AES" !!!
 
+    // FOR API IN METHOD "AES" !!!
     public class AESRootobject
     {
         public int status { get; set; }
@@ -138,6 +138,30 @@ namespace FN_Tool_CSharp
 
 
 
+    // FOR API IN METHOD "ShopTab" !!!
+    public class ShopRootobject
+    {
+        public int status { get; set; }
+        public ShopData data { get; set; }
+    }
+
+    public class ShopData
+    {
+        public string hash { get; set; }
+        public DateTime timestamp { get; set; }
+        public Section[] sections { get; set; }
+    }
+
+    public class Section
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public int quantity { get; set; }
+        public string[] list { get; set; }
+    }
+
+
+
     // FOR API IN METHOD "EventFlag" !!!
     public class Rootobject
     {
@@ -199,6 +223,61 @@ namespace FN_Tool_CSharp
     }
 
 
+
+    // FOR API IN METHOD "Servers" !!!
+    public class ServerRootobject
+    {
+        public int status { get; set; }
+        public ServerData data { get; set; }
+    }
+
+    public class ServerData
+    {
+        public DevplaytestProd12 devplaytestprod12 { get; set; }
+        public ReleaseplaytestProd releaseplaytestprod { get; set; }
+        public Stage stage { get; set; }
+    }
+
+    public class DevplaytestProd12
+    {
+        public string app { get; set; }
+        public DateTime serverDate { get; set; }
+        public string overridePropertiesVersion { get; set; }
+        public string cln { get; set; }
+        public string build { get; set; }
+        public string moduleName { get; set; }
+        public DateTime buildDate { get; set; }
+        public string version { get; set; }
+        public string branch { get; set; }
+    }
+
+    public class ReleaseplaytestProd
+    {
+        public string app { get; set; }
+        public DateTime serverDate { get; set; }
+        public string overridePropertiesVersion { get; set; }
+        public string cln { get; set; }
+        public string build { get; set; }
+        public string moduleName { get; set; }
+        public DateTime buildDate { get; set; }
+        public string version { get; set; }
+        public string branch { get; set; }
+    }
+
+    public class Stage
+    {
+        public string app { get; set; }
+        public DateTime serverDate { get; set; }
+        public string overridePropertiesVersion { get; set; }
+        public string cln { get; set; }
+        public string build { get; set; }
+        public string moduleName { get; set; }
+        public DateTime buildDate { get; set; }
+        public string version { get; set; }
+        public string branch { get; set; }
+    }
+
+
     // JSON CLASSES END HERE !!!
 
     // MAIN PROGRAM STARTS HERE !!!
@@ -220,20 +299,21 @@ namespace FN_Tool_CSharp
 
             if (json != null)
             {
-                    Console.WriteLine($"\nServer Status: {json.status} ");
-                    Console.WriteLine($"Build: {json.data.build}");
-                    Console.WriteLine($"API Last Updated: {json.data.updated}");
-                    int pakchunkCount = 0;
-                    foreach (var key in json.data.dynamicKeys)
-                    {
-                        pakchunkCount = pakchunkCount + 1;
-                        Console.WriteLine($"\n{key.pakFilename}: Guid = {key.pakGuid}\n{key.pakFilename}: AES Key = {key.key}");
-                    }
+                Console.WriteLine($"\nServer Status: {json.status} ");
+                Console.WriteLine($"Build: {json.data.build}");
+                Console.WriteLine($"API Last Updated: {json.data.updated}");
+                int pakchunkCount = 0;
+                foreach (var key in json.data.dynamicKeys)
+                {
+                    pakchunkCount = pakchunkCount + 1;
+                    Console.WriteLine($"\n{key.pakFilename}: Guid = {key.pakGuid}\n{key.pakFilename}: AES Key = {key.key}");
+                }
 
-                    Console.WriteLine($"\n\nTotal Pakchunks: {pakchunkCount}");
+                Console.WriteLine($"\n\nTotal Pakchunks: {pakchunkCount}");
             }
 
         }
+
         static void Cosmetics()
         {
             Console.Title = "FN New Cosmetics ID C#";
@@ -265,7 +345,7 @@ namespace FN_Tool_CSharp
                     var Rarity = item.rarity.displayValue;
                     var BackendRarity = item.rarity.backendValue;
                     var Icon = item.images.icon;
-                    Console.WriteLine($"\nItem Name = {Name}\nID = {ID}\nItem Description = {Desc}\nDisplay Rarity = {Rarity}\nBack End Rarity = {BackendRarity}\nDate Added = {item.added}");
+                    Console.WriteLine($"\nItem Name = {Name}\nID = {ID}\nItem Type = {item.type.value}, {item.type.backendValue}, {item.type.displayValue}\nItem Description = {Desc}\nDisplay Rarity = {Rarity}\nBack End Rarity = {BackendRarity}\nDate Added = {item.added}");
 
                     if (item.dynamicPakId != null)
                     {
@@ -289,6 +369,10 @@ namespace FN_Tool_CSharp
                             Console.WriteLine($"Item Shop History = {history}");
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("Item Shop History = Null [Not yet released]");
+                    }
                     if (item.set != null)
                     {
                         var set1 = item.set.value;
@@ -299,6 +383,7 @@ namespace FN_Tool_CSharp
                 Console.WriteLine($"\nTotal cosmetics added in {json.data.build} --> {itemcount}");
             }
         }
+
         static void Notice()
         {
             Console.Title = "FN Emergency Notice Update C#";
@@ -336,6 +421,7 @@ namespace FN_Tool_CSharp
                 }
             }
         }
+
         static void Files()
         {
             Console.Title = "FN New/Removed Files Grabber C#";
@@ -375,6 +461,7 @@ namespace FN_Tool_CSharp
                 }
             }
         }
+
         static void ShopTab()
         {
             Console.Title = "FN Shop Tab Grabber C#";
@@ -384,23 +471,25 @@ namespace FN_Tool_CSharp
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
             IRestResponse jsonResponse = client.Execute(jsonRequest);
-            jsonResponse.Content = "[" + jsonResponse.Content + "]";
+            jsonResponse.Content = jsonResponse.Content;
 
-            dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
+            var json = JsonConvert.DeserializeObject<ShopRootobject>(jsonResponse.Content);
 
             if (json != null)
             {
-                foreach (var data in json)
-                {
-                    Console.WriteLine($"Server Status: {data.status}");
+                Console.WriteLine($"Server Status: {json.status}");
+                Console.WriteLine($"Time Stamp: {json.data.timestamp}");
 
-                    foreach (var tab in data.data.sections)
+                foreach (var tab in json.data.sections)
+                {
+                    foreach (var list in tab.list)
                     {
-                        Console.WriteLine($"{tab.list} {tab.id} --> {tab.name} (X{tab.quantity})");
+                        Console.WriteLine($"({list}) = {tab.id} --> {tab.name} (X{tab.quantity})");
                     }
                 }
             }
         }
+
         static void EventFlag()
         {
             Console.Title = "Event Flag Grabber C#";
@@ -438,7 +527,44 @@ namespace FN_Tool_CSharp
             }
         }
 
-        // MAIN METHOD HERE 
+        static void Servers()
+        {
+            Console.Title = "FN DevServer Data";
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            string api = "https://fn-api.com/api/servers";
+            RestClient client = new RestClient(api);
+            IRestRequest jsonRequest = new RestRequest();
+            IRestResponse jsonResponse = client.Execute(jsonRequest);
+            jsonResponse.Content = jsonResponse.Content;
+
+            var json = JsonConvert.DeserializeObject<ServerRootobject>(jsonResponse.Content);
+
+            if (json != null)
+            {
+                Console.WriteLine($"Server Status: {json.status}");
+
+                if (json.data != null)
+                {
+                    Console.WriteLine("DevPlaytestProd12: \n\n");
+                    var CLN = json.data.devplaytestprod12.cln;
+                    var Build = json.data.devplaytestprod12.build;
+                    var ModuleName = json.data.devplaytestprod12.moduleName;
+                    var Version = json.data.devplaytestprod12.version;
+                    var Branch = json.data.devplaytestprod12.branch;
+                    Console.WriteLine($"App = {json.data.devplaytestprod12.app}");
+                    Console.WriteLine($"Server DateTime = {json.data.devplaytestprod12.serverDate}");
+                    Console.WriteLine($"CLN = {CLN}");
+                    Console.WriteLine($"Build = {Build}");
+                    Console.WriteLine($"Module = {ModuleName}");
+                    Console.WriteLine($"Build DateTime = {json.data.devplaytestprod12.buildDate}");
+                    Console.WriteLine($"Version = {Version}");
+                    Console.WriteLine($"Branch = {Branch}");
+                }
+            }
+        }
+
+        // MAIN METHOD HERE !!!
         static void Main(string[] args)
         {
             Console.Title = "FN Tool";
@@ -451,6 +577,7 @@ namespace FN_Tool_CSharp
             Console.WriteLine("\t[4] Files");
             Console.WriteLine("\t[5] Shop Tab");
             Console.WriteLine("\t[6] EventFlags");
+            Console.WriteLine("\t[7] DevServers");
             string ask = Console.ReadLine();
 
             if (ask == "1")
@@ -489,15 +616,11 @@ namespace FN_Tool_CSharp
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
-            else if (ask == "all")
+            else if (ask == "7")
             {
-                AES();
-                Notice();
-                Cosmetics();
-                ShopTab();
-                Files();
-                EventFlag();
-                Console.WriteLine("\n\n\nProcess finished with exit code 0");
+                Servers();
+                Console.WriteLine("\n\nProcess finished with exit code 0.");
+                Console.ReadKey();
             }
         }
     }
