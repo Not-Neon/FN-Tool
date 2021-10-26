@@ -137,6 +137,22 @@ namespace FN_Tool_CSharp
     }
 
 
+    // FOR API IN METHOD "Notice" !!!
+    public class NoticeRootobject
+    {
+        public int status { get; set; }
+        public NoticeData[] data { get; set; }
+    }
+
+    public class NoticeData
+    {
+        public bool hidden { get; set; }
+        public string title { get; set; }
+        public string body { get; set; }
+        public string[] platforms { get; set; }
+    }
+
+
 
     // FOR API IN METHOD "ShopTab" !!!
     public class ShopRootobject
@@ -158,6 +174,33 @@ namespace FN_Tool_CSharp
         public string name { get; set; }
         public int quantity { get; set; }
         public string[] list { get; set; }
+    }
+
+
+
+    // FOR API IN METHOD "PlayLists" !!!
+    public class PlaylistsRootobject
+    {
+        public int status { get; set; }
+        public Datum[] data { get; set; }
+    }
+
+    public class Datum
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public string sub_name { get; set; }
+        public string description { get; set; }
+        public string game_type { get; set; }
+        public object rating { get; set; }
+        public int min_players { get; set; }
+        public int max_players { get; set; }
+        public int max_teams { get; set; }
+        public int max_teamSize { get; set; }
+        public int max_squadSize { get; set; }
+        public object gameplay_tags { get; set; }
+        public string image { get; set; }
+        public object violator { get; set; }
     }
 
 
@@ -309,7 +352,7 @@ namespace FN_Tool_CSharp
                 int pakchunkCount = 0;
                 foreach (var key in json.data.dynamicKeys)
                 {
-                    pakchunkCount = pakchunkCount + 1;
+                    pakchunkCount++;
                     Console.WriteLine($"\n{key.pakFilename}: Guid = {key.pakGuid}\n{key.pakFilename}: AES Key = {key.key.ToUpper()}");
                 }
 
@@ -342,7 +385,7 @@ namespace FN_Tool_CSharp
                 int itemcount = 0;
                 foreach (var item in json.data.items)
                 {
-                    itemcount = itemcount + 1;
+                    itemcount++;
                     var ID = item.id;
                     var Name = item.name;
                     var Desc = item.description;
@@ -397,30 +440,27 @@ namespace FN_Tool_CSharp
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
             IRestResponse jsonResponse = client.Execute(jsonRequest);
-            jsonResponse.Content = "[" + jsonResponse.Content + "]";
+            jsonResponse.Content = jsonResponse.Content;
 
-            dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
+            var json = JsonConvert.DeserializeObject<NoticeRootobject>(jsonResponse.Content);
 
             if (json != null)
-            {
-                foreach (var data in json)
-                {
-                    Console.WriteLine($"\nServer Status: {data.status}\n");
+            {   
+                Console.WriteLine($"\nServer Status: {json.status}\n");
 
-                    if (data.data == null)
+                if (json.data == null)
+                {
+                    Console.WriteLine("No Emergency Notice update currently available.");
+                }
+                else if (json.data != null)
+                {
+                    foreach (var notice in json.data)
                     {
-                        Console.WriteLine("No Emergency Notice update currently available.");
-                    }
-                    else if (data.data != null)
-                    {
-                        foreach (var notice in data.data)
-                        {
-                            Console.WriteLine($"Gamemode: {notice.gamemodes[0]}");
-                            Console.WriteLine($"Hidden (bool true or false): {notice.hidden}");
-                            Console.WriteLine($"Playlist: {notice.playlists[0]}");
-                            Console.WriteLine($"\nEmergency Notice Title: {notice.title}");
-                            Console.WriteLine($"Emergency Notice Message: {notice.body}");
-                        }
+                        //Console.WriteLine($"Gamemode: {notice.gamemodes[0]}");
+                        Console.WriteLine($"Hidden (bool true or false): {notice.hidden}");
+                        //Console.WriteLine($"Playlist: {notice.playlists[0]}");
+                        Console.WriteLine($"\nEmergency Notice Title: {notice.title}");
+                        Console.WriteLine($"Emergency Notice Message: {notice.body}");
                     }
                 }
             }
@@ -490,6 +530,43 @@ namespace FN_Tool_CSharp
                     {
                         Console.WriteLine($"({list}) = {tab.id} --> {tab.name} (X{tab.quantity})");
                     }
+                }
+            }
+        }
+
+        static void PlayLists()
+        {
+            Console.Title = "Active Playlists";
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            string api = "https://fn-api.com/api/playlists/active";
+            RestClient client = new RestClient(api);
+            IRestRequest jsonRequest = new RestRequest();
+            IRestResponse jsonResponse = client.Execute(jsonRequest);
+            jsonResponse.Content = jsonResponse.Content;
+
+            var json = JsonConvert.DeserializeObject<PlaylistsRootobject>(jsonResponse.Content);
+
+            if (json != null)
+            {
+                Console.WriteLine($"Server Status: {json.status}\n");
+
+                foreach (var playlist in json.data)
+                {
+                    Console.WriteLine($"Playlist ID: {playlist.id}");
+                    if (playlist.name != null)
+                    {
+                        Console.WriteLine($"Playlist Name: {playlist.name}");
+                    }
+                    if (playlist.sub_name != null)
+                    {
+                        Console.WriteLine($"Playlist Subname: { playlist.sub_name}");
+                    }
+                    if (playlist.description != null)
+                    {
+                        Console.WriteLine($"Playlist Description:\n{playlist.description}");
+                    }
+                    Console.WriteLine($"Playlist Mode: {playlist.game_type}\n");
                 }
             }
         }
@@ -613,8 +690,9 @@ namespace FN_Tool_CSharp
             Console.WriteLine("\t[3] Emergency Notice");
             Console.WriteLine("\t[4] Files");
             Console.WriteLine("\t[5] Shop Tab");
-            Console.WriteLine("\t[6] EventFlags");
-            Console.WriteLine("\t[7] DevServers");
+            Console.WriteLine("\t[6] Playlists");
+            Console.WriteLine("\t[7] EventFlags");
+            Console.WriteLine("\t[8] DevServers");
             string ask = Console.ReadLine();
 
             if (ask == "1")
@@ -649,11 +727,17 @@ namespace FN_Tool_CSharp
             }
             else if (ask == "6")
             {
-                EventFlag();
+                PlayLists();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "7")
+            {
+                EventFlag();
+                Console.WriteLine("\n\nProcess finished with exit code 0.");
+                Console.ReadKey();
+            }
+            else if (ask == "8")
             {
                 Servers();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
