@@ -291,24 +291,26 @@ namespace FN_Tool_CSharp
             Console.Title = "FN AES Grabber C#";
             Console.ForegroundColor = ConsoleColor.Green;
 
-            string api = "https://fortnite-api.com/v2/aes";
-            RestClient client = new RestClient(api);
-            IRestRequest jsonRequest = new RestRequest();
-            IRestResponse jsonResponse = client.Execute(jsonRequest);
-            jsonResponse.Content = jsonResponse.Content;
+            // first api (Fortnite-API)
+            string api1 = "https://fortnite-api.com/v2/aes";
+            RestClient client1 = new RestClient(api1);
+            IRestRequest jsonRequest1 = new RestRequest();
+            IRestResponse jsonResponse1 = client1.Execute(jsonRequest1);
+            jsonResponse1.Content = jsonResponse1.Content;
 
-            var json = JsonConvert.DeserializeObject<AESRootobject>(jsonResponse.Content);
+            var json = JsonConvert.DeserializeObject<AESRootobject>(jsonResponse1.Content);
 
             if (json != null)
             {
                 Console.WriteLine($"\nServer Status: {json.status} ");
                 Console.WriteLine($"Build: {json.data.build}");
-                Console.WriteLine($"API Last Updated: {json.data.updated}");
+                Console.WriteLine($"API Last Updated: {json.data.updated}\n");
+                Console.WriteLine($"Main Static Key for current build: {json.data.mainKey.ToUpper()}");
                 int pakchunkCount = 0;
                 foreach (var key in json.data.dynamicKeys)
                 {
                     pakchunkCount = pakchunkCount + 1;
-                    Console.WriteLine($"\n{key.pakFilename}: Guid = {key.pakGuid}\n{key.pakFilename}: AES Key = {key.key}");
+                    Console.WriteLine($"\n{key.pakFilename}: Guid = {key.pakGuid}\n{key.pakFilename}: AES Key = {key.key.ToUpper()}");
                 }
 
                 Console.WriteLine($"\n\nTotal Pakchunks: {pakchunkCount}");
