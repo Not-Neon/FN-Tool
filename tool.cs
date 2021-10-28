@@ -335,13 +335,23 @@ namespace FN_Tool_CSharp
             Console.ForegroundColor = ConsoleColor.Green;
 
             // first api (Fortnite-API)
-            string api1 = "https://fortnite-api.com/v2/aes";
-            RestClient client1 = new RestClient(api1);
+            string api = "https://fortnite-api.com/v2/aes";
+            RestClient client = new RestClient(api);
             IRestRequest jsonRequest1 = new RestRequest();
-            IRestResponse jsonResponse1 = client1.Execute(jsonRequest1);
-            jsonResponse1.Content = jsonResponse1.Content;
+            IRestResponse jsonResponse = client.Execute(jsonRequest1);
+            jsonResponse.Content = jsonResponse.Content;
 
-            var json = JsonConvert.DeserializeObject<AESRootobject>(jsonResponse1.Content);
+            var json = JsonConvert.DeserializeObject<AESRootobject>(jsonResponse.Content);
+
+            // RESTSHARP CODE FOR FILES IN DYNAMIC PAKCHUNKS IS HERE
+            string api2 = "https://benbot.app/api/v1/files/dynamic/1008";
+            RestClient client2 = new RestClient(api2);
+            IRestRequest jsonRequest2 = new RestRequest();
+            IRestResponse jsonResponse2 = client2.Execute(jsonRequest2);
+            jsonResponse2.Content = jsonResponse2.Content;
+
+            dynamic json2 = JsonConvert.DeserializeObject(jsonResponse2.Content);
+
 
             if (json != null)
             {
@@ -357,6 +367,14 @@ namespace FN_Tool_CSharp
                 }
 
                 Console.WriteLine($"\n\nTotal Pakchunks: {pakchunkCount}");
+            }
+
+            if (json2 != null)
+            {
+                foreach (var file in json2)
+                {
+                    Console.WriteLine(file);
+                }
             }
 
         }
@@ -475,15 +493,16 @@ namespace FN_Tool_CSharp
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
             IRestResponse jsonResponse = client.Execute(jsonRequest);
-            jsonResponse.Content = "[" + jsonResponse.Content + "]";
+            jsonResponse.Content = jsonResponse.Content;
 
             dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
 
             if (json != null)
             {
+                Console.WriteLine("\nAdded Files in Current Build: \n");
+
                 foreach (var file in json)
                 {
-                    Console.WriteLine("\nAdded Files in Current Build: \n");
                     Console.WriteLine(file);
                 }
             }
@@ -492,15 +511,16 @@ namespace FN_Tool_CSharp
             RestClient clientRemoved = new RestClient(apiRemoved);
             IRestRequest jsonRequestRemoved = new RestRequest();
             IRestResponse jsonResponseRemoved = clientRemoved.Execute(jsonRequestRemoved);
-            jsonResponseRemoved.Content = "[" + jsonResponseRemoved.Content + "]";
+            jsonResponseRemoved.Content = jsonResponseRemoved.Content;
 
             dynamic jsonRemoved = JsonConvert.DeserializeObject(jsonResponseRemoved.Content);
 
             if (jsonRemoved != null)
             {
+                Console.WriteLine("\n\nRemoved files from Current Build: \n");
+
                 foreach (var fileRemoved in jsonRemoved)
                 {
-                    Console.WriteLine("\n\nRemoved files from Current Build: \n");
                     Console.WriteLine(fileRemoved);
                 }
             }
