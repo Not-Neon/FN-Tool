@@ -763,6 +763,12 @@ namespace FN_Tool_CSharp
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
+            else
+            {
+                Console.WriteLine("Invalid Input");
+                Console.WriteLine("\n\nProcess finished with exit code 0.");
+                Console.ReadKey();
+            }
         }
     }
 }
