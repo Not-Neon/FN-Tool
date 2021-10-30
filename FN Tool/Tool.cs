@@ -178,6 +178,207 @@ namespace FN_Tool_CSharp
 
 
 
+    // FOR AES IN METHOD "ShopItems" !!!
+
+    public class ShopIRootobject
+    {
+        public DateTime date { get; set; }
+        public DateTime expiration { get; set; }
+        public string featuredTitle { get; set; }
+        public Featured[] featured { get; set; }
+        public string dailyTitle { get; set; }
+        public Daily[] daily { get; set; }
+        public string specialFeaturedTitle { get; set; }
+        public Specialfeatured[] specialFeatured { get; set; }
+        public string specialDailyTitle { get; set; }
+        public object specialDaily { get; set; }
+        public object voteWinners { get; set; }
+    }
+
+    public class Featured
+    {
+        public int panel { get; set; }
+        public Entry[] entries { get; set; }
+    }
+
+    public class Entry
+    {
+        public string offerId { get; set; }
+        public int regularPrice { get; set; }
+        public int finalPrice { get; set; }
+        public bool isBundle { get; set; }
+        public bool isGiftable { get; set; }
+        public bool isRefundable { get; set; }
+        public int sortPriority { get; set; }
+        public object banner { get; set; }
+        public IItem[] items { get; set; }
+    }
+
+    public class IItem
+    {
+        public string id { get; set; }
+        public string path { get; set; }
+        public Icons icons { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public string shortDescription { get; set; }
+        public string backendType { get; set; }
+        public string rarity { get; set; }
+        public string backendRarity { get; set; }
+        public string set { get; set; }
+        public string setText { get; set; }
+        public ISeries series { get; set; }
+        public IVariant[] variants { get; set; }
+        public string[] gameplayTags { get; set; }
+    }
+
+    public class Icons
+    {
+        public string icon { get; set; }
+        public string featured { get; set; }
+        public string series { get; set; }
+    }
+
+    public class ISeries
+    {
+        public string name { get; set; }
+    }
+
+    public class IVariant
+    {
+        public string channel { get; set; }
+        public string type { get; set; }
+        public IOption[] options { get; set; }
+    }
+
+    public class IOption
+    {
+        public string tag { get; set; }
+        public string name { get; set; }
+        public string image { get; set; }
+        public bool startUnlocked { get; set; }
+        public bool isDefault { get; set; }
+        public bool hideIfNotOwned { get; set; }
+    }
+
+    public class Daily
+    {
+        public int panel { get; set; }
+        public Entry1[] entries { get; set; }
+    }
+
+    public class Entry1
+    {
+        public string offerId { get; set; }
+        public int regularPrice { get; set; }
+        public int finalPrice { get; set; }
+        public bool isBundle { get; set; }
+        public bool isGiftable { get; set; }
+        public bool isRefundable { get; set; }
+        public int sortPriority { get; set; }
+        public object banner { get; set; }
+        public Item1[] items { get; set; }
+    }
+
+    public class Item1
+    {
+        public string id { get; set; }
+        public string path { get; set; }
+        public Icons1 icons { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public string shortDescription { get; set; }
+        public string backendType { get; set; }
+        public string rarity { get; set; }
+        public string backendRarity { get; set; }
+        public string set { get; set; }
+        public string setText { get; set; }
+        public Series1 series { get; set; }
+        public object variants { get; set; }
+        public string[] gameplayTags { get; set; }
+    }
+
+    public class Icons1
+    {
+        public string icon { get; set; }
+        public object featured { get; set; }
+        public string series { get; set; }
+    }
+
+    public class Series1
+    {
+        public string name { get; set; }
+    }
+
+    public class Specialfeatured
+    {
+        public int panel { get; set; }
+        public Entry2[] entries { get; set; }
+    }
+
+    public class Entry2
+    {
+        public string offerId { get; set; }
+        public int regularPrice { get; set; }
+        public int finalPrice { get; set; }
+        public bool isBundle { get; set; }
+        public bool isGiftable { get; set; }
+        public bool isRefundable { get; set; }
+        public int sortPriority { get; set; }
+        public object banner { get; set; }
+        public Item2[] items { get; set; }
+    }
+
+    public class Item2
+    {
+        public string id { get; set; }
+        public string path { get; set; }
+        public Icons2 icons { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public string shortDescription { get; set; }
+        public string backendType { get; set; }
+        public string rarity { get; set; }
+        public string backendRarity { get; set; }
+        public string set { get; set; }
+        public string setText { get; set; }
+        public Series2 series { get; set; }
+        public Variant1[] variants { get; set; }
+        public string[] gameplayTags { get; set; }
+    }
+
+    public class Icons2
+    {
+        public string icon { get; set; }
+        public string featured { get; set; }
+        public string series { get; set; }
+    }
+
+    public class Series2
+    {
+        public string name { get; set; }
+    }
+
+    public class Variant1
+    {
+        public string channel { get; set; }
+        public string type { get; set; }
+        public Option1[] options { get; set; }
+    }
+
+    public class Option1
+    {
+        public string tag { get; set; }
+        public string name { get; set; }
+        public string image { get; set; }
+        public bool startUnlocked { get; set; }
+        public bool isDefault { get; set; }
+        public bool hideIfNotOwned { get; set; }
+    }
+
+
+
+
     // FOR API IN METHOD "PlayLists" !!!
     public class PlaylistsRootobject
     {
@@ -343,7 +544,7 @@ namespace FN_Tool_CSharp
 
             var json = JsonConvert.DeserializeObject<AESRootobject>(jsonResponse.Content);
 
-            // RESTSHARP CODE FOR FILES IN DYNAMIC PAKCHUNKS IS HERE
+            // RESTSHARP CODE FOR FILES IN DYNAMIC PAKCHUNKS HERE
             string api2 = "https://benbot.app/api/v1/files/dynamic/1011";
             RestClient client2 = new RestClient(api2);
             IRestRequest jsonRequest2 = new RestRequest();
@@ -374,7 +575,7 @@ namespace FN_Tool_CSharp
                 Console.WriteLine("\n\nFiles in Pakchunk1008:\n");
                 foreach (var file in json2)
                 {
-                    Console.WriteLine("\t"+ file);
+                    Console.WriteLine("\t" + file);
                 }
             }
 
@@ -464,7 +665,7 @@ namespace FN_Tool_CSharp
             var json = JsonConvert.DeserializeObject<NoticeRootobject>(jsonResponse.Content);
 
             if (json != null)
-            {   
+            {
                 Console.WriteLine($"\nServer Status: {json.status}\n");
 
                 if (json.data == null)
@@ -550,6 +751,72 @@ namespace FN_Tool_CSharp
                     foreach (var list in tab.list)
                     {
                         Console.WriteLine($"({list}) = {tab.id} --> {tab.name} (X{tab.quantity})");
+                    }
+                }
+            }
+        }
+
+        static void ShopItem()
+        {
+            Console.Title = "Shop Items";
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            string api = "https://benbot.app/api/v1/shop/br";
+            RestClient client = new RestClient(api);
+            IRestRequest jsonRequest = new RestRequest();
+            IRestResponse jsonResponse = client.Execute(jsonRequest);
+            jsonResponse.Content = jsonResponse.Content;
+
+            var json = JsonConvert.DeserializeObject<ShopIRootobject>(jsonResponse.Content);
+
+            if (json != null)
+            {
+                Console.WriteLine($"Date: {json.date}");
+                Console.WriteLine($"Expiration Time/Date: {json.expiration}");
+
+                Console.WriteLine("Shop Tab Titles:\n");
+                var Featured = json.featuredTitle;
+                Console.WriteLine(Featured);
+                var Daily = json.dailyTitle;
+                Console.WriteLine(Daily);
+                var SpecialF = json.specialFeaturedTitle;
+                Console.WriteLine(SpecialF);
+                var SpecialD = json.specialDailyTitle;
+                Console.WriteLine(SpecialD);
+
+                var itemcount = 0;
+                Console.WriteLine($"\n\nItems in {Featured}:\n\n");
+                foreach (var a in json.featured)
+                {
+                    foreach (var i in a.entries)
+                    {
+                        foreach (var data in i.items)
+                        {
+                            itemcount++;
+                            var ID = data.id;
+                            var Name = data.name;
+                            var Desc = data.description;
+                            var ShortDesc = data.shortDescription;
+                            var Rarity = data.rarity;
+                            var BackendRarity = data.backendRarity;
+                            var Type = data.backendType;
+                            var Path = data.path;
+                            var Icon = data.icons;
+                            Console.WriteLine($"Name: {Name}");
+                            Console.WriteLine($"ID: {ID}");
+                            Console.WriteLine($"Item Type: {Type}");
+                            Console.WriteLine($"Description: {Desc}");
+                            Console.WriteLine($"Short Description: {ShortDesc}");
+                            Console.WriteLine($"Rarity: {Rarity}");
+                            Console.WriteLine($"Backend Rarity: {BackendRarity}");
+                            Console.WriteLine($"Item Path: {Path}");
+                            if (data.set != null)
+                            {
+                                var Set = data.set;
+                                var SetText = data.setText;
+                                Console.WriteLine($"{Set}, {SetText}\n");
+                            }
+                        }
                     }
                 }
             }
@@ -711,9 +978,10 @@ namespace FN_Tool_CSharp
             Console.WriteLine("\t[3] Emergency Notice");
             Console.WriteLine("\t[4] Files");
             Console.WriteLine("\t[5] Shop Tab");
-            Console.WriteLine("\t[6] Playlists");
-            Console.WriteLine("\t[7] EventFlags");
-            Console.WriteLine("\t[8] DevServers");
+            Console.WriteLine("\t[6] Shop Item");
+            Console.WriteLine("\t[7] Playlists");
+            Console.WriteLine("\t[8] EventFlags");
+            Console.WriteLine("\t[9] ServerRelease");
             string ask = Console.ReadLine();
 
             if (ask == "1")
@@ -748,17 +1016,23 @@ namespace FN_Tool_CSharp
             }
             else if (ask == "6")
             {
-                PlayLists();
+                ShopItem();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "7")
             {
-                EventFlag();
+                PlayLists();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "8")
+            {
+                EventFlag();
+                Console.WriteLine("\n\nProcess finished with exit code 0.");
+                Console.ReadKey();
+            }
+            else if (ask == "9")
             {
                 Servers();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
