@@ -785,6 +785,8 @@ namespace FN_Tool_CSharp
                 Console.WriteLine(SpecialD);
 
                 var itemcount = 0;
+                var itemcount2 = 0;
+                var itemcount3 = 0;
                 Console.WriteLine($"\n\nItems in {Featured}:\n\n");
                 foreach (var a in json.featured)
                 {
@@ -814,11 +816,94 @@ namespace FN_Tool_CSharp
                             {
                                 var Set = data.set;
                                 var SetText = data.setText;
-                                Console.WriteLine($"{Set}, {SetText}\n");
+                                Console.WriteLine($"{Set} {SetText}\n");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\n");
                             }
                         }
                     }
                 }
+                Console.WriteLine($"Total Items in {Featured} = {itemcount} \n\n");
+                foreach (var a in json.daily)
+                {
+                    foreach (var i in a.entries)
+                    {
+                        foreach (var data in i.items)
+                        {
+                            itemcount2++;
+                            var ID = data.id;
+                            var Name = data.name;
+                            var Desc = data.description;
+                            var ShortDesc = data.shortDescription;
+                            var Rarity = data.rarity;
+                            var BackendRarity = data.backendRarity;
+                            var Type = data.backendType;
+                            var Path = data.path;
+                            var Icon = data.icons;
+                            Console.WriteLine($"Name: {Name}");
+                            Console.WriteLine($"ID: {ID}");
+                            Console.WriteLine($"Item Type: {Type}");
+                            Console.WriteLine($"Description: {Desc}");
+                            Console.WriteLine($"Short Description: {ShortDesc}");
+                            Console.WriteLine($"Rarity: {Rarity}");
+                            Console.WriteLine($"Backend Rarity: {BackendRarity}");
+                            Console.WriteLine($"Item Path: {Path}");
+                            if (data.set != null)
+                            {
+                                var Set = data.set;
+                                var SetText = data.setText;
+                                Console.WriteLine($"{Set} {SetText}\n");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\n");
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine($"Total Items in {Daily} = {itemcount2}\n\n");
+                foreach (var a in json.specialFeatured)
+                {
+                    foreach (var i in a.entries)
+                    {
+                        foreach (var data in i.items)
+                        {
+                            itemcount3++;
+                            var ID = data.id;
+                            var Name = data.name;
+                            var Desc = data.description;
+                            var ShortDesc = data.shortDescription;
+                            var Rarity = data.rarity;
+                            var BackendRarity = data.backendRarity;
+                            var Type = data.backendType;
+                            var Path = data.path;
+                            var Icon = data.icons;
+                            Console.WriteLine($"Name: {Name}");
+                            Console.WriteLine($"ID: {ID}");
+                            Console.WriteLine($"Item Type: {Type}");
+                            Console.WriteLine($"Description: {Desc}");
+                            Console.WriteLine($"Short Description: {ShortDesc}");
+                            Console.WriteLine($"Rarity: {Rarity}");
+                            Console.WriteLine($"Backend Rarity: {BackendRarity}");
+                            Console.WriteLine($"Item Path: {Path}");
+                            if (data.set != null)
+                            {
+                                var Set = data.set;
+                                var SetText = data.setText;
+                                Console.WriteLine($"{Set} {SetText}\n");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\n");
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine($"Total Items in {SpecialF} = {itemcount3}\n\n");
+                var total = itemcount + itemcount2 + itemcount3;
+                Console.WriteLine($"Total Items in the shop: {total}");
             }
         }
 
