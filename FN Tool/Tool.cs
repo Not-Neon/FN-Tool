@@ -378,6 +378,33 @@ namespace FN_Tool_CSharp
 
 
 
+    // FOR API IN METHOD "Background" !!!
+    public class BackgroundRootobject
+    {
+        public int status { get; set; }
+        public BackgroundData data { get; set; }
+    }
+
+    public class BackgroundData
+    {
+        public Lobby lobby { get; set; }
+        public Vault vault { get; set; }
+    }
+
+    public class Lobby
+    {
+        public string name { get; set; }
+        public string image { get; set; }
+    }
+
+    public class Vault
+    {
+        public string name { get; set; }
+        public object image { get; set; }
+    }
+
+
+
 
     // FOR API IN METHOD "PlayLists" !!!
     public class PlaylistsRootobject
@@ -572,7 +599,7 @@ namespace FN_Tool_CSharp
 
             if (json2 != null)
             {
-                Console.WriteLine("\n\nFiles in Pakchunk1008:\n");
+                Console.WriteLine("\n\nFiles in Pakchunk1011:\n");
                 foreach (var file in json2)
                 {
                     Console.WriteLine("\t" + file);
@@ -907,6 +934,37 @@ namespace FN_Tool_CSharp
             }
         }
 
+        static void Backgrounds()
+        {
+            Console.Title = "FN Background Images";
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            string api = "https://fn-api.com/api/backgrounds";
+            RestClient client = new RestClient(api);
+            IRestRequest jsonRequest = new RestRequest();
+            IRestResponse jsonResponse = client.Execute(jsonRequest);
+            jsonResponse.Content = jsonResponse.Content;
+
+            var json = JsonConvert.DeserializeObject<BackgroundRootobject>(jsonResponse.Content);
+
+            if (json != null)
+            {
+                Console.WriteLine($"Server Status: {json.status}");
+
+                if (json.data.lobby != null)
+                {
+                    Console.WriteLine($"Lobby Background Name: {json.data.lobby.name}");
+                    Console.WriteLine($"Lobby Background Image URL: {json.data.lobby.image}");
+                }
+                if (json.data.vault != null)
+                {
+                    Console.WriteLine($"Shop Background Name: {json.data.vault.name}");
+                    Console.WriteLine($"Shop Background Image URL: {json.data.vault.image}");
+                }
+                
+            }
+        }
+
         static void PlayLists()
         {
             Console.Title = "Active Playlists";
@@ -1064,9 +1122,10 @@ namespace FN_Tool_CSharp
             Console.WriteLine("\t[4] Files");
             Console.WriteLine("\t[5] Shop Tab");
             Console.WriteLine("\t[6] Shop Item");
-            Console.WriteLine("\t[7] Playlists");
-            Console.WriteLine("\t[8] EventFlags");
-            Console.WriteLine("\t[9] ServerRelease");
+            Console.WriteLine("\t[7] Background Image");
+            Console.WriteLine("\t[8] Playlists");
+            Console.WriteLine("\t[9] EventFlags");
+            Console.WriteLine("\t[10] ServerRelease");
             string ask = Console.ReadLine();
 
             if (ask == "1")
@@ -1107,17 +1166,23 @@ namespace FN_Tool_CSharp
             }
             else if (ask == "7")
             {
-                PlayLists();
+                Backgrounds();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "8")
             {
-                EventFlag();
+                PlayLists();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "9")
+            {
+                EventFlag();
+                Console.WriteLine("\n\nProcess finished with exit code 0.");
+                Console.ReadKey();
+            }
+            else if (ask == "10")
             {
                 Servers();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
