@@ -551,6 +551,7 @@ namespace FN_Tool_CSharp
     }
 
 
+
     // JSON CLASSES END HERE !!!
 
     // MAIN PROGRAM STARTS HERE !!!
@@ -1109,6 +1110,40 @@ namespace FN_Tool_CSharp
             }
         }
 
+        static void PlayerStats()
+        {
+            Console.Title = "";
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.Write("Enter the account name : ");
+            string PlayerName = Console.ReadLine();
+            Console.Write("LifeTime Player Stats or Seasonal Player Stats? [Reply with True/False]");
+            //string LifeTimeOrSeason = Console.ReadLine();
+
+            string api = $"https://fortnite-api.com/v2/stats/br/v2?name={PlayerName}";
+            RestClient client = new RestClient(api);
+            IRestRequest jsonRequest = new RestRequest();
+            IRestResponse jsonResponse = client.Execute(jsonRequest);
+            jsonResponse.Content = jsonResponse.Content;
+
+            dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
+
+            if (json != null)
+            {
+                Console.WriteLine($"Server Status : {json.status}");
+
+                foreach (var data in json.data)
+                {
+                    Console.WriteLine("Account Details:\n");
+                    Console.WriteLine($"Account Name: {data.account.name}");
+                    Console.WriteLine($"Account ID: {data.account.id}");
+
+                    Console.WriteLine("BattlePass Info:\n");
+                    Console.WriteLine($"Level: {data.battlepass.level}\nProgress: {data.battlepass.progress}");
+                }
+            }
+        }
+
         // MAIN METHOD HERE !!!
         static void Main(string[] args)
         {
@@ -1124,8 +1159,9 @@ namespace FN_Tool_CSharp
             Console.WriteLine("\t[6] Shop Item");
             Console.WriteLine("\t[7] Background Image");
             Console.WriteLine("\t[8] Playlists");
-            Console.WriteLine("\t[9] EventFlags");
-            Console.WriteLine("\t[10] ServerRelease");
+            Console.WriteLine("\t[9] Event Flags");
+            Console.WriteLine("\t[10] Server Release");
+            Console.WriteLine("\t[11] Player Stats");
             string ask = Console.ReadLine();
 
             if (ask == "1")
@@ -1185,6 +1221,12 @@ namespace FN_Tool_CSharp
             else if (ask == "10")
             {
                 Servers();
+                Console.WriteLine("\n\nProcess finished with exit code 0.");
+                Console.ReadKey();
+            }
+            else if (ask == "11")
+            {
+                PlayerStats();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
