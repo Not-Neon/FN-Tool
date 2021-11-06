@@ -551,6 +551,150 @@ namespace FN_Tool_CSharp
     }
 
 
+    // FOR API IN METHOD "PlayerStats" !!!
+    public class StatRootobject
+    {
+        public int status { get; set; }
+        public StatData data { get; set; }
+    }
+
+    public class StatData
+    {
+        public Account account { get; set; }
+        public Battlepass battlePass { get; set; }
+        public object image { get; set; }
+        public Stats stats { get; set; }
+    }
+
+    public class Account
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+    }
+
+    public class Battlepass
+    {
+        public int level { get; set; }
+        public int progress { get; set; }
+    }
+
+    public class Stats
+    {
+        public All all { get; set; }
+    }
+
+    public class All
+    {
+        public Overall overall { get; set; }
+        public Solo solo { get; set; }
+        public Duo duo { get; set; }
+        public Squad squad { get; set; }
+        public Ltm ltm { get; set; }
+    }
+
+    public class Overall
+    {
+        public int score { get; set; }
+        public float scorePerMin { get; set; }
+        public float scorePerMatch { get; set; }
+        public int wins { get; set; }
+        public int top3 { get; set; }
+        public int top5 { get; set; }
+        public int top6 { get; set; }
+        public int top10 { get; set; }
+        public int top12 { get; set; }
+        public int top25 { get; set; }
+        public int kills { get; set; }
+        public float killsPerMin { get; set; }
+        public float killsPerMatch { get; set; }
+        public int deaths { get; set; }
+        public float kd { get; set; }
+        public int matches { get; set; }
+        public float winRate { get; set; }
+        public int minutesPlayed { get; set; }
+        public int playersOutlived { get; set; }
+        public DateTime lastModified { get; set; }
+    }
+
+    public class Solo
+    {
+        public int score { get; set; }
+        public float scorePerMin { get; set; }
+        public float scorePerMatch { get; set; }
+        public int wins { get; set; }
+        public int top10 { get; set; }
+        public int top25 { get; set; }
+        public int kills { get; set; }
+        public float killsPerMin { get; set; }
+        public float killsPerMatch { get; set; }
+        public int deaths { get; set; }
+        public float kd { get; set; }
+        public int matches { get; set; }
+        public float winRate { get; set; }
+        public int minutesPlayed { get; set; }
+        public int playersOutlived { get; set; }
+        public DateTime lastModified { get; set; }
+    }
+
+    public class Duo
+    {
+        public int score { get; set; }
+        public float scorePerMin { get; set; }
+        public float scorePerMatch { get; set; }
+        public int wins { get; set; }
+        public int top5 { get; set; }
+        public int top12 { get; set; }
+        public int kills { get; set; }
+        public float killsPerMin { get; set; }
+        public float killsPerMatch { get; set; }
+        public int deaths { get; set; }
+        public float kd { get; set; }
+        public int matches { get; set; }
+        public float winRate { get; set; }
+        public int minutesPlayed { get; set; }
+        public int playersOutlived { get; set; }
+        public DateTime lastModified { get; set; }
+    }
+
+    public class Squad
+    {
+        public int score { get; set; }
+        public float scorePerMin { get; set; }
+        public float scorePerMatch { get; set; }
+        public int wins { get; set; }
+        public int top3 { get; set; }
+        public int top6 { get; set; }
+        public int kills { get; set; }
+        public float killsPerMin { get; set; }
+        public float killsPerMatch { get; set; }
+        public int deaths { get; set; }
+        public float kd { get; set; }
+        public int matches { get; set; }
+        public float winRate { get; set; }
+        public int minutesPlayed { get; set; }
+        public int playersOutlived { get; set; }
+        public DateTime lastModified { get; set; }
+    }
+
+    public class Ltm
+    {
+        public int score { get; set; }
+        public float scorePerMin { get; set; }
+        public float scorePerMatch { get; set; }
+        public int wins { get; set; }
+        public int kills { get; set; }
+        public float killsPerMin { get; set; }
+        public float killsPerMatch { get; set; }
+        public int deaths { get; set; }
+        public float kd { get; set; }
+        public int matches { get; set; }
+        public float winRate { get; set; }
+        public int minutesPlayed { get; set; }
+        public int playersOutlived { get; set; }
+        public DateTime lastModified { get; set; }
+    }
+
+
 
     // JSON CLASSES END HERE !!!
 
@@ -963,7 +1107,6 @@ namespace FN_Tool_CSharp
                     Console.WriteLine($"Shop Background Name: {json.data.vault.name}");
                     Console.WriteLine($"Shop Background Image URL: {json.data.vault.image}");
                 }
-                
             }
         }
 
@@ -1113,13 +1256,13 @@ namespace FN_Tool_CSharp
 
         static void PlayerStats()
         {
-            Console.Title = "";
+            Console.Title = "Player Stats";
             Console.ForegroundColor = ConsoleColor.Green;
 
             Console.Write("Enter the account name : ");
             string PlayerName = Console.ReadLine();
-            Console.Write("LifeTime Player Stats or Seasonal Player Stats? [Reply with True/False]");
-            //string LifeTimeOrSeason = Console.ReadLine();
+            /*Console.Write("LifeTime Player Stats or Seasonal Player Stats? [Reply with True/False]");
+            string LifeTimeOrSeason = Console.ReadLine();*/
 
             string api = $"https://fortnite-api.com/v2/stats/br/v2?name={PlayerName}";
             RestClient client = new RestClient(api);
@@ -1127,20 +1270,30 @@ namespace FN_Tool_CSharp
             IRestResponse jsonResponse = client.Execute(jsonRequest);
             jsonResponse.Content = jsonResponse.Content;
 
-            dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
+            var json = JsonConvert.DeserializeObject<StatRootobject>(jsonResponse.Content);
 
             if (json != null)
             {
                 Console.WriteLine($"Server Status : {json.status}");
+                Console.WriteLine("\nAccount Details:\n");
+                Console.WriteLine($"Account Name: {json.data.account.name}");
+                Console.WriteLine($"Account ID: {json.data.account.id}");
 
-                foreach (var data in json.data)
+                Console.WriteLine("\nBattlePass Info:\n");
+                Console.WriteLine($"Level: {json.data.battlePass.level}\nProgress: {json.data.battlePass.progress}");
+
+                var SoloStats = json.data.stats.all.solo;
+                if (SoloStats != null)
                 {
-                    Console.WriteLine("Account Details:\n");
-                    Console.WriteLine($"Account Name: {data.account.name}");
-                    Console.WriteLine($"Account ID: {data.account.id}");
-
-                    Console.WriteLine("BattlePass Info:\n");
-                    Console.WriteLine($"Level: {data.battlepass.level}\nProgress: {data.battlepass.progress}");
+                    Console.WriteLine("\nSolo Stats:\n");
+                    Console.WriteLine($"Win Amount: {SoloStats.wins}");
+                    Console.WriteLine($"Top 10: {SoloStats.top10}\nTop 25: {SoloStats.top25}");
+                    Console.WriteLine($"Kills: {SoloStats.kills}\nDeaths: {SoloStats.deaths}");
+                    Console.WriteLine($"Score: {SoloStats.score}\nScore per match: {SoloStats.scorePerMatch}");
+                    Console.WriteLine($"Matches Played: {SoloStats.matches}");
+                    Console.WriteLine($"Minutes Played in Solo: {SoloStats.minutesPlayed}");
+                    Console.WriteLine($"Kills To Death Ratio (KDR): {SoloStats.kd}");
+                    Console.WriteLine($"Data Last Modified: {SoloStats.lastModified}");
                 }
             }
         }
