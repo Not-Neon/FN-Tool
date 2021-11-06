@@ -572,16 +572,6 @@ namespace FN_Tool_CSharp
 
             var json = JsonConvert.DeserializeObject<AESRootobject>(jsonResponse.Content);
 
-            // RESTSHARP CODE FOR FILES IN DYNAMIC PAKCHUNKS HERE
-            string api2 = "https://benbot.app/api/v1/files/dynamic/1011";
-            RestClient client2 = new RestClient(api2);
-            IRestRequest jsonRequest2 = new RestRequest();
-            IRestResponse jsonResponse2 = client2.Execute(jsonRequest2);
-            jsonResponse2.Content = jsonResponse2.Content;
-
-            dynamic json2 = JsonConvert.DeserializeObject(jsonResponse2.Content);
-
-
             if (json != null)
             {
                 Console.WriteLine($"\nServer Status: {json.status} ");
@@ -598,9 +588,20 @@ namespace FN_Tool_CSharp
                 Console.WriteLine($"\n\nTotal Pakchunks: {pakchunkCount}");
             }
 
+            // RESTSHARP CODE FOR FILES IN DYNAMIC PAKCHUNKS HERE
+            Console.WriteLine("Enter a Dynamic Pakchunk number to access it's files : ");
+            string Pakchunk = Console.ReadLine();
+            string api2 = $"https://benbot.app/api/v1/files/dynamic/{Pakchunk}";
+            RestClient client2 = new RestClient(api2);
+            IRestRequest jsonRequest2 = new RestRequest();
+            IRestResponse jsonResponse2 = client2.Execute(jsonRequest2);
+            jsonResponse2.Content = jsonResponse2.Content;
+
+            dynamic json2 = JsonConvert.DeserializeObject(jsonResponse2.Content);
+
             if (json2 != null)
             {
-                Console.WriteLine("\n\nFiles in Pakchunk1011:\n");
+                Console.WriteLine($"\n\nFiles in Pakchunk {Pakchunk}:\n");
                 foreach (var file in json2)
                 {
                     Console.WriteLine("\t" + file);
