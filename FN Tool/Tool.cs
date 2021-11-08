@@ -164,7 +164,8 @@ namespace FN_Tool_CSharp
     public class ShopData
     {
         public string hash { get; set; }
-        public DateTime timestamp { get; set; }
+        public DateTime updated { get; set; }
+        public DateTime date { get; set; }
         public Section[] sections { get; set; }
     }
 
@@ -173,8 +174,8 @@ namespace FN_Tool_CSharp
         public string id { get; set; }
         public string name { get; set; }
         public int quantity { get; set; }
-        public string[] list { get; set; }
     }
+
 
 
 
@@ -509,6 +510,8 @@ namespace FN_Tool_CSharp
         [JsonProperty("releaseplaytest-prod")]
         public ReleaseplaytestProd releaseplaytestprod { get; set; }
         public Stage stage { get; set; }
+        [JsonProperty("extqareleasetestingb-prod")]
+        public ExtqareleasetestingbProd extqareleasetestingbprod { get; set; }
     }
 
     public class DevplaytestProd12
@@ -538,6 +541,19 @@ namespace FN_Tool_CSharp
     }
 
     public class Stage
+    {
+        public string app { get; set; }
+        public DateTime serverDate { get; set; }
+        public string overridePropertiesVersion { get; set; }
+        public string cln { get; set; }
+        public string build { get; set; }
+        public string moduleName { get; set; }
+        public DateTime buildDate { get; set; }
+        public string version { get; set; }
+        public string branch { get; set; }
+    }
+
+    public class ExtqareleasetestingbProd
     {
         public string app { get; set; }
         public DateTime serverDate { get; set; }
@@ -698,11 +714,12 @@ namespace FN_Tool_CSharp
 
     // JSON CLASSES END HERE !!!
 
-    // MAIN PROGRAM STARTS HERE !!!
 
-    class Program
+
+    // Public class and methods start here !!!
+    public class Run
     {
-        static void AES()
+        public static void AES()
         {
             Console.Title = "FN AES Grabber C#";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -754,7 +771,7 @@ namespace FN_Tool_CSharp
 
         }
 
-        static void Cosmetics()
+        public static void Cosmetics()
         {
             Console.Title = "FN New Cosmetics ID C#";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -824,7 +841,7 @@ namespace FN_Tool_CSharp
             }
         }
 
-        static void Notice()
+        public static void Notice()
         {
             Console.Title = "FN Emergency Notice Update C#";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -859,7 +876,7 @@ namespace FN_Tool_CSharp
             }
         }
 
-        static void Files()
+        public static void Files()
         {
             Console.Title = "FN New/Removed Files Grabber C#";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -901,7 +918,7 @@ namespace FN_Tool_CSharp
             }
         }
 
-        static void ShopTab()
+        public static void ShopTab()
         {
             Console.Title = "FN Shop Tab Grabber C#";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -917,19 +934,16 @@ namespace FN_Tool_CSharp
             if (json != null)
             {
                 Console.WriteLine($"Server Status: {json.status}");
-                Console.WriteLine($"Time Stamp: {json.data.timestamp}");
+                Console.WriteLine($"Date: {json.data.date}");
 
                 foreach (var tab in json.data.sections)
                 {
-                    foreach (var list in tab.list)
-                    {
-                        Console.WriteLine($"({list}) = {tab.id} --> {tab.name} (X{tab.quantity})");
-                    }
+                    Console.WriteLine($"{tab.id} --> {tab.name} (X{tab.quantity})");
                 }
             }
         }
 
-        static void ShopItem()
+        public static void ShopItem()
         {
             Console.Title = "Shop Items";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -1080,7 +1094,7 @@ namespace FN_Tool_CSharp
             }
         }
 
-        static void Backgrounds()
+        public static void Backgrounds()
         {
             Console.Title = "FN Background Images";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -1110,7 +1124,7 @@ namespace FN_Tool_CSharp
             }
         }
 
-        static void PlayLists()
+        public static void PlayLists()
         {
             Console.Title = "Active Playlists";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -1147,7 +1161,7 @@ namespace FN_Tool_CSharp
             }
         }
 
-        static void EventFlag()
+        public static void EventFlag()
         {
             Console.Title = "Event Flag Grabber C#";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -1184,7 +1198,7 @@ namespace FN_Tool_CSharp
             }
         }
 
-        static void Servers()
+        public static void Servers()
         {
             Console.Title = "FN DevServer Data";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -1251,10 +1265,27 @@ namespace FN_Tool_CSharp
                     Console.WriteLine($"Version = {Version}");
                     Console.WriteLine($"Branch = {Branch}\n\n");
                 }
+                if (json.data.extqareleasetestingbprod != null)
+                {
+                    Console.WriteLine("ExtQAReleaseTestingA: \n\n");
+                    var CLN = json.data.extqareleasetestingbprod.cln;
+                    var Build = json.data.extqareleasetestingbprod.build;
+                    var ModuleName = json.data.extqareleasetestingbprod.moduleName;
+                    var Version = json.data.extqareleasetestingbprod.version;
+                    var Branch = json.data.extqareleasetestingbprod.branch;
+                    Console.WriteLine($"App = {json.data.extqareleasetestingbprod.app}");
+                    Console.WriteLine($"Server DateTime = {json.data.extqareleasetestingbprod.serverDate}");
+                    Console.WriteLine($"CLN = {CLN}");
+                    Console.WriteLine($"Build = {Build}");
+                    Console.WriteLine($"Module = {ModuleName}");
+                    Console.WriteLine($"Build DateTime = {json.data.extqareleasetestingbprod.buildDate}");
+                    Console.WriteLine($"Version = {Version}");
+                    Console.WriteLine($"Branch = {Branch}\n\n");
+                }
             }
         }
 
-        static void PlayerStats()
+        public static void PlayerStats()
         {
             Console.Title = "Player Stats";
             Console.ForegroundColor = ConsoleColor.Green;
@@ -1275,29 +1306,49 @@ namespace FN_Tool_CSharp
             if (json != null)
             {
                 Console.WriteLine($"Server Status : {json.status}");
-                Console.WriteLine("\nAccount Details:\n");
-                Console.WriteLine($"Account Name: {json.data.account.name}");
-                Console.WriteLine($"Account ID: {json.data.account.id}");
-
-                Console.WriteLine("\nBattlePass Info:\n");
-                Console.WriteLine($"Level: {json.data.battlePass.level}\nProgress: {json.data.battlePass.progress}");
-
-                var SoloStats = json.data.stats.all.solo;
-                if (SoloStats != null)
+                if (json.status != 404)
                 {
-                    Console.WriteLine("\nSolo Stats:\n");
-                    Console.WriteLine($"Win Amount: {SoloStats.wins}");
-                    Console.WriteLine($"Top 10: {SoloStats.top10}\nTop 25: {SoloStats.top25}");
-                    Console.WriteLine($"Kills: {SoloStats.kills}\nDeaths: {SoloStats.deaths}");
-                    Console.WriteLine($"Score: {SoloStats.score}\nScore per match: {SoloStats.scorePerMatch}");
-                    Console.WriteLine($"Matches Played: {SoloStats.matches}");
-                    Console.WriteLine($"Minutes Played in Solo: {SoloStats.minutesPlayed}");
-                    Console.WriteLine($"Kills To Death Ratio (KDR): {SoloStats.kd}");
-                    Console.WriteLine($"Data Last Modified: {SoloStats.lastModified}");
+                    Console.WriteLine("\nAccount Details:\n");
+                    Console.WriteLine($"Account Name: {json.data.account.name}");
+                    Console.WriteLine($"Account ID: {json.data.account.id}");
+
+                    Console.WriteLine("\nBattlePass Info:\n");
+                    Console.WriteLine($"Level: {json.data.battlePass.level}\nProgress: {json.data.battlePass.progress}");
+
+                    var SoloStats = json.data.stats.all.solo;
+                    if (SoloStats != null)
+                    {
+                        Console.WriteLine("\nSolo Stats:\n");
+                        Console.WriteLine($"Win Amount: {SoloStats.wins}");
+                        Console.WriteLine($"Top 10: {SoloStats.top10}\nTop 25: {SoloStats.top25}");
+                        Console.WriteLine($"Kills: {SoloStats.kills}\nDeaths: {SoloStats.deaths}");
+                        Console.WriteLine($"Score: {SoloStats.score}\nScore per match: {SoloStats.scorePerMatch}");
+                        Console.WriteLine($"Matches Played: {SoloStats.matches}");
+                        Console.WriteLine($"Minutes Played in Solo: {SoloStats.minutesPlayed}");
+                        Console.WriteLine($"Kills To Death Ratio (KDR): {SoloStats.kd}");
+                        Console.WriteLine($"Data Last Modified: {SoloStats.lastModified}");
+                    }
                 }
+                
+            }
+            else if (json.status == 404)
+            {
+                Console.WriteLine($"Server Status : {json.status}\nAccount not found.");
+            }
+            else
+            {
+                Console.WriteLine($"Server Status : {json.status}\nSomething went wrong. Try again.");
             }
         }
+    }
 
+
+
+
+    // MAIN PROGRAM STARTS HERE !!!
+
+    class Program
+    {
         // MAIN METHOD HERE !!!
         static void Main(string[] args)
         {
@@ -1320,67 +1371,67 @@ namespace FN_Tool_CSharp
 
             if (ask == "1")
             {
-                AES();
+                Run.AES();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "2")
             {
-                Cosmetics();
+                Run.Cosmetics();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "3")
             {
-                Notice();
+                Run.Notice();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "4")
             {
-                Files();
+                Run.Files();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "5")
             {
-                ShopTab();
+                Run.ShopTab();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "6")
             {
-                ShopItem();
+                Run.ShopItem();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "7")
             {
-                Backgrounds();
+                Run.Backgrounds();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "8")
             {
-                PlayLists();
+                Run.PlayLists();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "9")
             {
-                EventFlag();
+                Run.EventFlag();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "10")
             {
-                Servers();
+                Run.Servers();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "11")
             {
-                PlayerStats();
+                Run.PlayerStats();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
