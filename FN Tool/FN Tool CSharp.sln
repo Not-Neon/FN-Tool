@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FN Tool CSharp", "FN Tool CSharp\FN Tool CSharp.csproj", "{3899B64D-67DC-4B40-9DC1-7922853360DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FN Tool CSharp", "FN Tool CSharp\FN Tool CSharp.csproj", "{1394C744-0C1A-46AF-A328-77B5426A4C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3899B64D-67DC-4B40-9DC1-7922853360DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3899B64D-67DC-4B40-9DC1-7922853360DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3899B64D-67DC-4B40-9DC1-7922853360DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3899B64D-67DC-4B40-9DC1-7922853360DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1394C744-0C1A-46AF-A328-77B5426A4C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1394C744-0C1A-46AF-A328-77B5426A4C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1394C744-0C1A-46AF-A328-77B5426A4C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1394C744-0C1A-46AF-A328-77B5426A4C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {02AC17AF-58FA-440F-AC7F-BB2ECBF0B5F1}
+		SolutionGuid = {EAE40C99-C210-40D1-ABF5-F704BCCA3E93}
 	EndGlobalSection
 EndGlobal
