@@ -24,19 +24,19 @@ def new_cosmetics():
         if cosmetics['set'] is not None:
             set1 = cosmetics['set']['value']
             set2 = cosmetics['set']['text']
-            if set1 == "Arcane: League of Legends":
+            '''if set1 == "Arcane: League of Legends":
                 urllib.request.urlretrieve(icon, f'{name}.png')
                 icons = Image.open(f'{name}.png')
                 icons.save(f'{name}.png')
-            print(f'Part of set: {set1}, {set2}')
+            print(f'Part of set: {set1}, {set2}')'''
         '''if name == "Shadow Midas":
             urllib.request.urlretrieve(icon, f'{name}.png')
             icons = Image.open(f'{name}.png')
             icons.save(f'{name}.png')'''
 
-        #urllib.request.urlretrieve(icon, f'{name}.png')
-        #icons = Image.open(f'{name}.png')
-        #icons.save(f'{name}.png')
+        urllib.request.urlretrieve(icon, f'{name}.png')
+        icons = Image.open(f'{name}.png')
+        icons.save(f'{name}.png')
         '''urllib.request.urlretrieve(icon, f'{itemID}.png')
         icons = Image.open(f'{itemID}.png')
         icons.save(f'{itemID}.png')'''
