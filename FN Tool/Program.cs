@@ -1312,26 +1312,82 @@ namespace FN_Tool_CSharp
                     Console.WriteLine($"Account Name: {json.data.account.name}");
                     Console.WriteLine($"Account ID: {json.data.account.id}");
 
-                    Console.WriteLine("\nBattlePass Info:\n");
+                    Console.WriteLine("\n\nBattlePass Info:\n");
                     Console.WriteLine($"Level: {json.data.battlePass.level}\nProgress: {json.data.battlePass.progress}");
 
                     var SoloStats = json.data.stats.all.solo;
+                    var DuoStats = json.data.stats.all.duo;
+                    var SquadStats = json.data.stats.all.squad;
+                    var LTMStats = json.data.stats.all.ltm;
+                    var OverallStats = json.data.stats.all.overall;
+
                     if (SoloStats != null)
                     {
-                        Console.WriteLine("\nSolo Stats:\n");
+                        Console.WriteLine("\n\nSolo Stats:\n");
                         Console.WriteLine($"Win Amount: {SoloStats.wins}");
+                        Console.WriteLine($"Win Rate: {SoloStats.winRate}");
                         Console.WriteLine($"Top 10: {SoloStats.top10}\nTop 25: {SoloStats.top25}");
                         Console.WriteLine($"Kills: {SoloStats.kills}\nDeaths: {SoloStats.deaths}");
                         Console.WriteLine($"Score: {SoloStats.score}\nScore per match: {SoloStats.scorePerMatch}");
-                        Console.WriteLine($"Matches Played: {SoloStats.matches}");
-                        Console.WriteLine($"Minutes Played in Solo: {SoloStats.minutesPlayed}");
+                        Console.WriteLine($"Matches Played: {SoloStats.matches}\nMinutes Played in Solo: {SoloStats.minutesPlayed}");
+                        Console.WriteLine($"Players Outlived: {SoloStats.playersOutlived}");
                         Console.WriteLine($"Kills To Death Ratio (KDR): {SoloStats.kd}");
                         Console.WriteLine($"Data Last Modified: {SoloStats.lastModified}");
+                    }
+                    if (DuoStats != null)
+                    {
+                        Console.WriteLine("\n\nDuo Stats:\n");
+                        Console.WriteLine($"Win Amount: {DuoStats.wins}");
+                        Console.WriteLine($"Win Rate: {DuoStats.winRate}");
+                        Console.WriteLine($"Top 5: {DuoStats.top5}\nTop 12: {DuoStats.top12}");
+                        Console.WriteLine($"Kills: {DuoStats.kills}\nDeaths: {DuoStats.deaths}");
+                        Console.WriteLine($"Score: {DuoStats.score}\nScore per match: {DuoStats.scorePerMatch}");
+                        Console.WriteLine($"Matches Played: {DuoStats.matches}\nMinutes Played in Duo: {DuoStats.minutesPlayed}");
+                        Console.WriteLine($"Players Outlived: {DuoStats.playersOutlived}");
+                        Console.WriteLine($"Kills To Death Ratio (KDR): {DuoStats.kd}");
+                        Console.WriteLine($"Data Last Modified: {DuoStats.lastModified}");
+                    }
+                    if (SquadStats != null)
+                    {
+                        Console.WriteLine("\n\nSquad Stats:\n");
+                        Console.WriteLine($"Win Amount: {SquadStats.wins}");
+                        Console.WriteLine($"Win Rate: {SquadStats.winRate}");
+                        Console.WriteLine($"Top 3: {SquadStats.top3}\nTop 6: {SquadStats.top6}");
+                        Console.WriteLine($"Kills: {SquadStats.kills}\nDeaths: {SquadStats.deaths}");
+                        Console.WriteLine($"Score: {SquadStats.score}\nScore per match: {SquadStats.scorePerMatch}");
+                        Console.WriteLine($"Matches Played: {SquadStats.matches}\nMinutes Played in Squad: {SquadStats.minutesPlayed}");
+                        Console.WriteLine($"Players Outlived: {SquadStats.playersOutlived}");
+                        Console.WriteLine($"Kills To Death Ratio (KDR): {SquadStats.kd}");
+                        Console.WriteLine($"Data Last Modified: {SquadStats.lastModified}");
+                    }
+                    if (LTMStats != null)
+                    {
+                        Console.WriteLine("\n\nLTM Stats:\n");
+                        Console.WriteLine($"Win Amount: {LTMStats.wins}");
+                        Console.WriteLine($"Win Rate: {LTMStats.winRate}");
+                        Console.WriteLine($"Kills: {LTMStats.kills}\nDeaths: {LTMStats.deaths}");
+                        Console.WriteLine($"Score: {LTMStats.score}\nScore per match: {LTMStats.scorePerMatch}");
+                        Console.WriteLine($"Matches Played: {LTMStats.matches}\nMinutes Played in LTM's: {LTMStats.minutesPlayed}");
+                        Console.WriteLine($"Players Outlived: {LTMStats.playersOutlived}");
+                        Console.WriteLine($"Kills To Death Ratio (KDR): {LTMStats.kd}");
+                        Console.WriteLine($"Data Last Modified: {LTMStats.lastModified}");
+                    }
+                    if (OverallStats != null)
+                    {
+                        Console.WriteLine("\n\nOverall Stats:\n");
+                        Console.WriteLine($"Win Amount: {OverallStats.wins}");
+                        Console.WriteLine($"Win Rate: {OverallStats.winRate}");
+                        Console.WriteLine($"Kills: {OverallStats.kills}\nDeaths: {OverallStats.deaths}");
+                        Console.WriteLine($"Score: {OverallStats.score}\nScore per match: {OverallStats.scorePerMatch}");
+                        Console.WriteLine($"Matches Played: {OverallStats.matches}\nMinutes Played in Squad: {OverallStats.minutesPlayed}");
+                        Console.WriteLine($"Players Outlived: {OverallStats.playersOutlived}");
+                        Console.WriteLine($"Kills To Death Ratio (KDR): {OverallStats.kd}");
+                        Console.WriteLine($"Data Last Modified: {OverallStats.lastModified}");
                     }
                 }
 
             }
-            else if (json.status == 404)
+            else if (json == null)
             {
                 Console.WriteLine($"Server Status : {json.status}\nAccount not found.");
             }
