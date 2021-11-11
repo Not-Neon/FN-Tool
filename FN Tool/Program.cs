@@ -712,6 +712,31 @@ namespace FN_Tool_CSharp
 
 
 
+    // FOR API IN METHOD "CreatorCode" !!!
+    public class CCRootobject
+    {
+        public int status { get; set; }
+        public CCData data { get; set; }
+    }
+
+    public class CCData
+    {
+        public string code { get; set; }
+        public CCAccount account { get; set; }
+        public string status { get; set; }
+        public bool verified { get; set; }
+    }
+
+    public class CCAccount
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+    }
+
+
+
+
+
     // JSON CLASSES END HERE !!!
 
 
@@ -802,7 +827,14 @@ namespace FN_Tool_CSharp
                     var Rarity = item.rarity.displayValue;
                     var BackendRarity = item.rarity.backendValue;
                     var Icon = item.images.icon;
-                    Console.WriteLine($"\nItem Name = {Name}\nID = {ID}\nItem Type = {item.type.value}, {item.type.backendValue}, {item.type.displayValue}\nItem Description = {Desc}\nDisplay Rarity = {Rarity}\nBack End Rarity = {BackendRarity}\nDate Added = {item.added}");
+                    var Path = item.path;
+                    Console.WriteLine(
+                        $"\nItem Name = {Name}\nID = {ID}\nItem Type = {item.type.value}, " +
+                        $"{item.type.backendValue}, {item.type.displayValue}\n" +
+                        $"Item Description = {Desc}\nDisplay Rarity = {Rarity}\n" +
+                        $"Back End Rarity = {BackendRarity}\nDate Added = {item.added}\n" +
+                        $"File Path = {Path}"
+                        );
 
                     if (item.dynamicPakId != null)
                     {
@@ -1396,6 +1428,35 @@ namespace FN_Tool_CSharp
                 Console.WriteLine($"Server Status : {json.status}\nSomething went wrong. Try again.");
             }
         }
+
+        public static void CreatorCode()
+        {
+            Console.Title = "FN Creator Codes";
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.Write("Enter the creator code : ");
+            var CreatorCode = Console.ReadLine();
+
+            string api = $"https://fortnite-api.com/v2/creatorcode?name={CreatorCode}";
+            RestClient client = new RestClient(api);
+            IRestRequest jsonRequest = new RestRequest();
+            IRestResponse jsonResponse = client.Execute(jsonRequest);
+            jsonResponse.Content = jsonResponse.Content;
+
+            var json = JsonConvert.DeserializeObject<CCRootobject>(jsonResponse.Content);
+
+            if (json != null)
+            {
+                Console.WriteLine($"Server Status: {json.status}");
+
+                if (json.data != null)
+                {
+                    Console.WriteLine($"Creator Code: {json.data.code}\nCode Status: {json.data.status}");
+                    Console.WriteLine($"Account: {json.data.account.name}\nAccount ID: {json.data.account.id}");
+                    Console.WriteLine($"Code Verification: {json.data.verified}");
+                }
+            }
+        }
     }
 
 
@@ -1405,13 +1466,38 @@ namespace FN_Tool_CSharp
 
     class Program
     {
+        public static void DefaultInfo()
+        {
+            string api = $"https://benbot.app/api/v1/mappings";
+            RestClient client = new RestClient(api);
+            IRestRequest jsonRequest = new RestRequest();
+            IRestResponse jsonResponse = client.Execute(jsonRequest);
+            jsonResponse.Content = jsonResponse.Content;
+
+            dynamic json = JsonConvert.DeserializeObject(jsonResponse.Content);
+
+            if (json != null)
+            {
+                foreach (var data in json)
+                {
+                    Console.WriteLine($"Current Game Version : {data.meta.version}\n");
+                    break;
+                }
+            }
+        }
+
         // MAIN METHOD HERE !!!
         static void Main(string[] args)
         {
             Console.Title = "FN Tool";
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("Specify an operation.\n");
+
+            Console.WriteLine($"Greetings! It is currently {DateTime.UtcNow} UTC");
+            DefaultInfo();
+
+
+            Console.WriteLine("\nSpecify an operation.\n");
             Console.WriteLine("\t[1] AES");
             Console.WriteLine("\t[2] Cosmetics");
             Console.WriteLine("\t[3] Emergency Notice");
@@ -1423,6 +1509,7 @@ namespace FN_Tool_CSharp
             Console.WriteLine("\t[9] Event Flags");
             Console.WriteLine("\t[10] Server Release");
             Console.WriteLine("\t[11] Player Stats");
+            Console.WriteLine("\t[12] Creator Code Check");
             string ask = Console.ReadLine();
 
             if (ask == "1")
@@ -1488,6 +1575,12 @@ namespace FN_Tool_CSharp
             else if (ask == "11")
             {
                 Run.PlayerStats();
+                Console.WriteLine("\n\nProcess finished with exit code 0.");
+                Console.ReadKey();
+            }
+            else if (ask == "12")
+            {
+                Run.CreatorCode();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
