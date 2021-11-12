@@ -141,16 +141,37 @@ namespace FN_Tool_CSharp
     public class NoticeRootobject
     {
         public int status { get; set; }
-        public NoticeData[] data { get; set; }
+        public NoticeDatum[] data { get; set; }
     }
 
-    public class NoticeData
+    public class NoticeDatum
     {
-        public bool hidden { get; set; }
         public string title { get; set; }
         public string body { get; set; }
+        public object hidden { get; set; }
+        public object gamemodes { get; set; }
         public string[] platforms { get; set; }
+        public Playlist[] playlists { get; set; }
     }
+
+    public class Playlist
+    {
+        public string id { get; set; }
+        public string name { get; set; }
+        public string sub_name { get; set; }
+        public string description { get; set; }
+        public string game_type { get; set; }
+        public object rating { get; set; }
+        public int min_players { get; set; }
+        public int max_players { get; set; }
+        public int max_teams { get; set; }
+        public int max_teamSize { get; set; }
+        public int max_squadSize { get; set; }
+        public object gameplay_tags { get; set; }
+        public object image { get; set; }
+        public object violator { get; set; }
+    }
+
 
 
 
@@ -746,9 +767,6 @@ namespace FN_Tool_CSharp
     {
         public static void AES()
         {
-            Console.Title = "FN AES Grabber C#";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             // first api (Fortnite-API)
             string api = "https://fortnite-api.com/v2/aes";
             RestClient client = new RestClient(api);
@@ -775,8 +793,9 @@ namespace FN_Tool_CSharp
             }
 
             // RESTSHARP CODE FOR FILES IN DYNAMIC PAKCHUNKS HERE
-            Console.WriteLine("Enter a Dynamic Pakchunk number to access it's files : ");
+            Console.Write("Enter a Dynamic Pakchunk number to access it's files : ");
             string Pakchunk = Console.ReadLine();
+
             string api2 = $"https://benbot.app/api/v1/files/dynamic/{Pakchunk}";
             RestClient client2 = new RestClient(api2);
             IRestRequest jsonRequest2 = new RestRequest();
@@ -798,9 +817,6 @@ namespace FN_Tool_CSharp
 
         public static void Cosmetics()
         {
-            Console.Title = "FN New Cosmetics ID C#";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://fortnite-api.com/v2/cosmetics/br/new";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -860,7 +876,7 @@ namespace FN_Tool_CSharp
                     }
                     else
                     {
-                        Console.WriteLine("Item Shop History = Null [Not yet released]");
+                        Console.WriteLine("Item Shop History = Null (Not yet release)");
                     }
                     if (item.set != null)
                     {
@@ -875,9 +891,6 @@ namespace FN_Tool_CSharp
 
         public static void Notice()
         {
-            Console.Title = "FN Emergency Notice Update C#";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://fn-api.com/api/emergencyNotices";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -898,11 +911,39 @@ namespace FN_Tool_CSharp
                 {
                     foreach (var notice in json.data)
                     {
-                        //Console.WriteLine($"Gamemode: {notice.gamemodes[0]}");
                         Console.WriteLine($"Hidden (bool true or false): {notice.hidden}");
-                        //Console.WriteLine($"Playlist: {notice.playlists[0]}");
                         Console.WriteLine($"\nEmergency Notice Title: {notice.title}");
                         Console.WriteLine($"Emergency Notice Message: {notice.body}");
+                        if (notice.gamemodes != null)
+                        {
+                            Console.WriteLine($"Gamemode: {notice.gamemodes}");
+                        }
+                        
+                        foreach (var Platforms in notice.platforms)
+                        {
+                            Console.WriteLine($"Platforms: {Platforms}");
+                        }
+
+                        if (notice.playlists != null)
+                        {
+                            foreach (var playlist in notice.playlists)
+                            {
+                                Console.WriteLine($"Playlist ID: {playlist.id}");
+                                if (playlist.name != null)
+                                {
+                                    Console.WriteLine($"Playlist Name: {playlist.name}");
+                                }
+                                if (playlist.sub_name != null)
+                                {
+                                    Console.WriteLine($"Playlist Subname: { playlist.sub_name}");
+                                }
+                                if (playlist.description != null)
+                                {
+                                    Console.WriteLine($"Playlist Description:\n{playlist.description}");
+                                }
+                                Console.WriteLine($"Playlist Mode: {playlist.game_type}\n");
+                            }
+                        }
                     }
                 }
             }
@@ -910,9 +951,6 @@ namespace FN_Tool_CSharp
 
         public static void Files()
         {
-            Console.Title = "FN New/Removed Files Grabber C#";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://benbot.app/api/v1/files/added";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -952,9 +990,6 @@ namespace FN_Tool_CSharp
 
         public static void ShopTab()
         {
-            Console.Title = "FN Shop Tab Grabber C#";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://fn-api.com/api/shop/sections";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -977,9 +1012,6 @@ namespace FN_Tool_CSharp
 
         public static void ShopItem()
         {
-            Console.Title = "Shop Items";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://benbot.app/api/v1/shop/br";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -1007,119 +1039,131 @@ namespace FN_Tool_CSharp
                 var itemcount2 = 0;
                 var itemcount3 = 0;
                 Console.WriteLine($"\n\nItems in {Featured}:\n\n");
-                foreach (var a in json.featured)
+                if (json.featured != null)
                 {
-                    foreach (var i in a.entries)
+                    foreach (var a in json.featured)
                     {
-                        foreach (var data in i.items)
+                        foreach (var i in a.entries)
                         {
-                            itemcount++;
-                            var ID = data.id;
-                            var Name = data.name;
-                            var Desc = data.description;
-                            var ShortDesc = data.shortDescription;
-                            var Rarity = data.rarity;
-                            var BackendRarity = data.backendRarity;
-                            var Type = data.backendType;
-                            var Path = data.path;
-                            var Icon = data.icons;
-                            Console.WriteLine($"Name: {Name}");
-                            Console.WriteLine($"ID: {ID}");
-                            Console.WriteLine($"Item Type: {Type}");
-                            Console.WriteLine($"Description: {Desc}");
-                            Console.WriteLine($"Short Description: {ShortDesc}");
-                            Console.WriteLine($"Rarity: {Rarity}");
-                            Console.WriteLine($"Backend Rarity: {BackendRarity}");
-                            Console.WriteLine($"Item Path: {Path}");
-                            if (data.set != null)
+                            foreach (var data in i.items)
                             {
-                                var Set = data.set;
-                                var SetText = data.setText;
-                                Console.WriteLine($"{Set} {SetText}\n");
-                            }
-                            else
-                            {
-                                Console.WriteLine("\n");
+                                itemcount++;
+                                var ID = data.id;
+                                var Name = data.name;
+                                var Desc = data.description;
+                                var ShortDesc = data.shortDescription;
+                                var Rarity = data.rarity;
+                                var BackendRarity = data.backendRarity;
+                                var Type = data.backendType;
+                                var Path = data.path;
+                                var Icon = data.icons;
+                                Console.WriteLine($"Name: {Name}");
+                                Console.WriteLine($"ID: {ID}");
+                                Console.WriteLine($"Item Type: {Type}");
+                                Console.WriteLine($"Description: {Desc}");
+                                Console.WriteLine($"Short Description: {ShortDesc}");
+                                Console.WriteLine($"Rarity: {Rarity}");
+                                Console.WriteLine($"Backend Rarity: {BackendRarity}");
+                                Console.WriteLine($"Item Path: {Path}");
+                                if (data.set != null)
+                                {
+                                    var Set = data.set;
+                                    var SetText = data.setText;
+                                    Console.WriteLine($"{Set} {SetText}\n");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\n");
+                                }
                             }
                         }
                     }
                 }
                 Console.WriteLine($"Total Items in {Featured} = {itemcount} \n\n");
-                foreach (var a in json.daily)
+
+                if (json.daily != null)
                 {
-                    foreach (var i in a.entries)
+                    foreach (var a in json.daily)
                     {
-                        foreach (var data in i.items)
+                        foreach (var i in a.entries)
                         {
-                            itemcount2++;
-                            var ID = data.id;
-                            var Name = data.name;
-                            var Desc = data.description;
-                            var ShortDesc = data.shortDescription;
-                            var Rarity = data.rarity;
-                            var BackendRarity = data.backendRarity;
-                            var Type = data.backendType;
-                            var Path = data.path;
-                            var Icon = data.icons;
-                            Console.WriteLine($"Name: {Name}");
-                            Console.WriteLine($"ID: {ID}");
-                            Console.WriteLine($"Item Type: {Type}");
-                            Console.WriteLine($"Description: {Desc}");
-                            Console.WriteLine($"Short Description: {ShortDesc}");
-                            Console.WriteLine($"Rarity: {Rarity}");
-                            Console.WriteLine($"Backend Rarity: {BackendRarity}");
-                            Console.WriteLine($"Item Path: {Path}");
-                            if (data.set != null)
+                            foreach (var data in i.items)
                             {
-                                var Set = data.set;
-                                var SetText = data.setText;
-                                Console.WriteLine($"{Set} {SetText}\n");
-                            }
-                            else
-                            {
-                                Console.WriteLine("\n");
+                                itemcount2++;
+                                var ID = data.id;
+                                var Name = data.name;
+                                var Desc = data.description;
+                                var ShortDesc = data.shortDescription;
+                                var Rarity = data.rarity;
+                                var BackendRarity = data.backendRarity;
+                                var Type = data.backendType;
+                                var Path = data.path;
+                                var Icon = data.icons;
+                                Console.WriteLine($"Name: {Name}");
+                                Console.WriteLine($"ID: {ID}");
+                                Console.WriteLine($"Item Type: {Type}");
+                                Console.WriteLine($"Description: {Desc}");
+                                Console.WriteLine($"Short Description: {ShortDesc}");
+                                Console.WriteLine($"Rarity: {Rarity}");
+                                Console.WriteLine($"Backend Rarity: {BackendRarity}");
+                                Console.WriteLine($"Item Path: {Path}");
+                                if (data.set != null)
+                                {
+                                    var Set = data.set;
+                                    var SetText = data.setText;
+                                    Console.WriteLine($"{Set} {SetText}\n");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\n");
+                                }
                             }
                         }
                     }
                 }
                 Console.WriteLine($"Total Items in {Daily} = {itemcount2}\n\n");
-                foreach (var a in json.specialFeatured)
+                
+                if (json.specialFeatured != null)
                 {
-                    foreach (var i in a.entries)
+                    foreach (var a in json.specialFeatured)
                     {
-                        foreach (var data in i.items)
+                        foreach (var i in a.entries)
                         {
-                            itemcount3++;
-                            var ID = data.id;
-                            var Name = data.name;
-                            var Desc = data.description;
-                            var ShortDesc = data.shortDescription;
-                            var Rarity = data.rarity;
-                            var BackendRarity = data.backendRarity;
-                            var Type = data.backendType;
-                            var Path = data.path;
-                            var Icon = data.icons;
-                            Console.WriteLine($"Name: {Name}");
-                            Console.WriteLine($"ID: {ID}");
-                            Console.WriteLine($"Item Type: {Type}");
-                            Console.WriteLine($"Description: {Desc}");
-                            Console.WriteLine($"Short Description: {ShortDesc}");
-                            Console.WriteLine($"Rarity: {Rarity}");
-                            Console.WriteLine($"Backend Rarity: {BackendRarity}");
-                            Console.WriteLine($"Item Path: {Path}");
-                            if (data.set != null)
+                            foreach (var data in i.items)
                             {
-                                var Set = data.set;
-                                var SetText = data.setText;
-                                Console.WriteLine($"{Set} {SetText}\n");
-                            }
-                            else
-                            {
-                                Console.WriteLine("\n");
+                                itemcount3++;
+                                var ID = data.id;
+                                var Name = data.name;
+                                var Desc = data.description;
+                                var ShortDesc = data.shortDescription;
+                                var Rarity = data.rarity;
+                                var BackendRarity = data.backendRarity;
+                                var Type = data.backendType;
+                                var Path = data.path;
+                                var Icon = data.icons;
+                                Console.WriteLine($"Name: {Name}");
+                                Console.WriteLine($"ID: {ID}");
+                                Console.WriteLine($"Item Type: {Type}");
+                                Console.WriteLine($"Description: {Desc}");
+                                Console.WriteLine($"Short Description: {ShortDesc}");
+                                Console.WriteLine($"Rarity: {Rarity}");
+                                Console.WriteLine($"Backend Rarity: {BackendRarity}");
+                                Console.WriteLine($"Item Path: {Path}");
+                                if (data.set != null)
+                                {
+                                    var Set = data.set;
+                                    var SetText = data.setText;
+                                    Console.WriteLine($"{Set} {SetText}\n");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\n");
+                                }
                             }
                         }
                     }
                 }
+
                 Console.WriteLine($"Total Items in {SpecialF} = {itemcount3}\n\n");
                 var total = itemcount + itemcount2 + itemcount3;
                 Console.WriteLine($"Total Items in the shop: {total}");
@@ -1128,9 +1172,6 @@ namespace FN_Tool_CSharp
 
         public static void Backgrounds()
         {
-            Console.Title = "FN Background Images";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://fn-api.com/api/backgrounds";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -1158,9 +1199,6 @@ namespace FN_Tool_CSharp
 
         public static void PlayLists()
         {
-            Console.Title = "Active Playlists";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://fn-api.com/api/playlists/active";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -1195,9 +1233,6 @@ namespace FN_Tool_CSharp
 
         public static void EventFlag()
         {
-            Console.Title = "Event Flag Grabber C#";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://benbot.app/api/v1/calendar";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -1232,9 +1267,6 @@ namespace FN_Tool_CSharp
 
         public static void Servers()
         {
-            Console.Title = "FN DevServer Data";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             string api = "https://fn-api.com/api/servers";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest = new RestRequest();
@@ -1319,9 +1351,6 @@ namespace FN_Tool_CSharp
 
         public static void PlayerStats()
         {
-            Console.Title = "Player Stats";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             Console.Write("Enter the account name : ");
             string PlayerName = Console.ReadLine();
             /*Console.Write("LifeTime Player Stats or Seasonal Player Stats? [Reply with True/False]");
@@ -1417,23 +1446,11 @@ namespace FN_Tool_CSharp
                         Console.WriteLine($"Data Last Modified: {OverallStats.lastModified}");
                     }
                 }
-
-            }
-            else if (json == null)
-            {
-                Console.WriteLine($"Server Status : {json.status}\nAccount not found.");
-            }
-            else
-            {
-                Console.WriteLine($"Server Status : {json.status}\nSomething went wrong. Try again.");
             }
         }
 
         public static void CreatorCode()
         {
-            Console.Title = "FN Creator Codes";
-            Console.ForegroundColor = ConsoleColor.Green;
-
             Console.Write("Enter the creator code : ");
             var CreatorCode = Console.ReadLine();
 
@@ -1512,74 +1529,91 @@ namespace FN_Tool_CSharp
             Console.WriteLine("\t[12] Creator Code Check");
             string ask = Console.ReadLine();
 
+            string[] vs = { "Working on it...\n\n", "Loading...\n\n", "Grabbing your IP-- oh I mean, grabbing your data...\n\n" };
+
+            Random random = new Random();
+            int RandIndex = random.Next(vs.Length);
+
             if (ask == "1")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.AES();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "2")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.Cosmetics();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "3")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.Notice();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "4")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.Files();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "5")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.ShopTab();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "6")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.ShopItem();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "7")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.Backgrounds();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "8")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.PlayLists();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "9")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.EventFlag();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "10")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.Servers();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "11")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.PlayerStats();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
             }
             else if (ask == "12")
             {
+                Console.WriteLine(vs[RandIndex]);
                 Run.CreatorCode();
                 Console.WriteLine("\n\nProcess finished with exit code 0.");
                 Console.ReadKey();
