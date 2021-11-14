@@ -1529,100 +1529,68 @@ namespace FN_Tool_CSharp
             string ask = Console.ReadLine();
 
             string[] vs = { "Working on it...\n\n", "Loading...\n\n", "Grabbing your IP-- oh I mean, grabbing your data...\n\n" };
-
+            
             Random random = new Random();
             int RandIndex = random.Next(vs.Length);
+            
+            // switch statement!
 
-            if (ask == "1")
+            switch (ask)
             {
+            case "1":
                 Console.WriteLine(vs[RandIndex]);
                 Run.AES();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "2")
-            {
+                break;
+            case "2":
                 Console.WriteLine(vs[RandIndex]);
                 Run.Cosmetics();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "3")
-            {
+                break;
+            case "3":
                 Console.WriteLine(vs[RandIndex]);
                 Run.Notice();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "4")
-            {
+                break;
+            case "4":
                 Console.WriteLine(vs[RandIndex]);
                 Run.Files();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "5")
-            {
+                break;
+            case "5":
                 Console.WriteLine(vs[RandIndex]);
                 Run.ShopTab();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "6")
-            {
+                break;
+            case "6":
                 Console.WriteLine(vs[RandIndex]);
                 Run.ShopItem();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "7")
-            {
+                break;
+            case "7":
                 Console.WriteLine(vs[RandIndex]);
                 Run.Backgrounds();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "8")
-            {
+                break;
+            case "8":
                 Console.WriteLine(vs[RandIndex]);
                 Run.PlayLists();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "9")
-            {
+                break;
+            case "9":
                 Console.WriteLine(vs[RandIndex]);
                 Run.EventFlag();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "10")
-            {
+                break;
+            case "10":
                 Console.WriteLine(vs[RandIndex]);
                 Run.Servers();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "11")
-            {
+                break;
+            case "11":
                 Console.WriteLine(vs[RandIndex]);
                 Run.PlayerStats();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else if (ask == "12")
-            {
+                break;
+            case "12":
                 Console.WriteLine(vs[RandIndex]);
                 Run.CreatorCode();
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
-            else
-            {
+                break; 
+            default:
                 Console.WriteLine("Invalid Input");
-                Console.WriteLine("\n\nProcess finished with exit code 0.");
-                Console.ReadKey();
-            }
+                break;
+        }
+        Console.WriteLine("\n\nProcess finished with exit code 0.");
+        Console.ReadKey();
         }
     }
 }
