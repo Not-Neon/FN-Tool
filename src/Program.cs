@@ -234,6 +234,16 @@ public class Icons
     public string icon { get; set; }
     public string featured { get; set; }
     public string series { get; set; }
+
+    public async Task DownloadAsync(string path, bool useFeatured = true)
+    {
+        var url = useFeatured && featured != null ? featured : icon;
+        var httpClient = new HttpClient();
+        var content = await httpClient.GetByteArrayAsync(url).ConfigureAwait(false);
+
+        await File.WriteAllBytesAsync(path, content).ConfigureAwait(false);
+    }
+
 }
 
 public class ISeries
