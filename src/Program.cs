@@ -1481,7 +1481,7 @@ internal class Program
 
         var random = new Random();
         var randomIndex = random.Next(vs.Length);
-
+        // user input
         Console.WriteLine(vs[randomIndex]);
         switch (ask)
         {
