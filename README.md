@@ -7,7 +7,7 @@ An all in one FN Leaking tool written in C#.
 To use the python script for new cosmetics' icons, you must have [Python 3.9.7](https://www.python.org/downloads/release/python-397/) or higher with the PIL and the Requests module installed. 
 
 ### FN-Tool
-To use the C# script for FN-Tool, you can either download the zipped source files and run them in your IDE, or install the .exe from [here[().
+To use the C# script for FN-Tool, you can either download the zipped source files and run them in your IDE, or install the .exe from [here](https://github.com/NotNeonDEV/FN-Tool/releases/tag/v1.0).
 
 
 # Contribution
