@@ -767,7 +767,6 @@ namespace FN_Tool_CSharp
     {
         public static void AES()
         {
-            // first api (Fortnite-API)
             string api = "https://fortnite-api.com/v2/aes";
             RestClient client = new RestClient(api);
             IRestRequest jsonRequest1 = new RestRequest();
