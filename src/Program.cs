@@ -798,6 +798,12 @@ public class Run
                     $"Back End Rarity = {BackendRarity}\nDate Added = {item.added}\n" +
                     $"File Path = {Path}"
                 );
+                
+                var Httpclient = new HttpClient();
+                var content = await Httpclient.GetByteArrayAsync(Icon).ConfigureAwait(false);
+
+                await File.WriteAllBytesAsync($"{ID}.png", content).ConfigureAwait(false);
+                
 
                 if (item.dynamicPakId != null)
                 {
