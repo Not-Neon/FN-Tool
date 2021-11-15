@@ -7,7 +7,7 @@ An all in one FN Leaking tool written in C#.
 To use the C# script for FN-Tool, you can either download the zipped source files and run them in your IDE, or install the .exe from [here](https://github.com/NotNeonDEV/FN-Tool/releases/tag/v1.0).
 
 # Credits
-FN-Tool and NCG (New Cosmetics Generator) are powered by Benbot API, Fortnite-API.com and FN-API.
+FN-Tool is powered by Benbot API, Fortnite-API.com and FN-API.
 
 # Contribution
 I am a noob, if you can make my code more efficient, then please send a pull request... I will gladly accept and merge if everything is alright.
