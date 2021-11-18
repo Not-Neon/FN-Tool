@@ -13,12 +13,6 @@ To run FN-Tool, you must have either JetBrains Rider, Visual Studio 2022 or Visu
 - [Newtonsoft.JSON](https://www.newtonsoft.com/json)
 - [Newtonsoft.JSON Github](https://github.com/JamesNK/Newtonsoft.Json)
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
 **Bold** and _Italic_ and `Code` text
 
 [Link](url) and ![Image](src)
