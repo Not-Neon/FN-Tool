@@ -20,3 +20,30 @@ To run FN-Tool, you must have either JetBrains Rider, Visual Studio 2022 or Visu
 ### Source Download
 
 Download all the source ".zip" files of FN-Tool from the GitHub page, or [click this link.](https://github.com/NotNeonDEV/FN-Tool/archive/refs/heads/main.zip)
+
+### Important
+
+Please do not remove important code parts or code files of the project at any part. DO NOT AT ANY POINT REMOVE THE FOLLOWING:
+
+`public class Run
+{
+  ...
+}
+`
+
+
+`class Program
+{
+ ...
+}
+`
+
+
+`async or await keywords that will cause errors later`
+
+
+`In the objects folder (FNTool.Objects) : AES.cs, Cosmetics.cs, CreatorCode.cs, etc.`
+
+### Licensing
+
+FN-Tool comes with an MIT Licence. To know more about the licence, [click this link.](https://github.com/NotNeonDEV/FN-Tool/blob/main/LICENSE)
