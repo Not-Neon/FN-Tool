@@ -47,3 +47,9 @@ Please do not remove important code parts or code files of the project at any pa
 ### Licensing
 
 FN-Tool comes with an MIT Licence. To know more about the licence, [click this link.](https://github.com/NotNeonDEV/FN-Tool/blob/main/LICENSE)
+
+### Authors and Contributors
+
+- [NotNeonDEV (Neon) ](https://github.com/NotNeonDEV)
+- [thoo0224 (Thoo Thoo)](https://github.com/thoo0224)
+- [sirvibegodlol (Xplore) ](https://github.com/sirvibegodlol)
