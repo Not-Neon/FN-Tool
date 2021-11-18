@@ -1,17 +1,23 @@
-## Welcome to GitHub Pages
+## FN-Tool
 
+An all in one leaking tool useful for grabbing information on Fortnite game.
+
+```
 You can use the [editor on GitHub](https://github.com/NotNeonDEV/FN-Tool/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+```
+### Requirements
 
-### Markdown
+To run FN-Tool, you must have either JetBrains Rider, Visual Studio 2022 or Visual Studio Code with the .NET 6.0 SDK installed. You must also install the dependencies of FN-Tool into your project.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Dependencies
 
-```markdown
-Syntax highlighted code block
+- [RestSharp](https://restsharp.dev/)
+- [RestSharp Github](https://github.com/restsharp/RestSharp)
+- [Newtonsoft.JSON](https://www.newtonsoft.com/json)
+- [Newtonsoft.JSON Github](https://github.com/JamesNK/Newtonsoft.Json)
 
-# Header 1
 ## Header 2
 ### Header 3
 
