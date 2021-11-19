@@ -8,10 +8,8 @@ To run FN-Tool, you must have either JetBrains Rider, Visual Studio 2022 or Visu
 
 ### Dependencies
 
-- [RestSharp](https://restsharp.dev/)
-- [RestSharp Github](https://github.com/restsharp/RestSharp)
-- [Newtonsoft.JSON](https://www.newtonsoft.com/json)
-- [Newtonsoft.JSON Github](https://github.com/JamesNK/Newtonsoft.Json)
+- [RestSharp](https://restsharp.dev/) || [RestSharp Github](https://github.com/restsharp/RestSharp)
+- [Newtonsoft.JSON](https://www.newtonsoft.com/json) || [Newtonsoft.JSON Github](https://github.com/JamesNK/Newtonsoft.Json)
 
 ### Images 
 
