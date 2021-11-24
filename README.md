@@ -1,7 +1,7 @@
 # FN-Tool
 An all in one FN Leaking tool useful for grabbing data on Fortnite game.
 
-<img width="1000" alt="image" src="https://user-images.githubusercontent.com/82705218/143269500-2b2fe398-358b-4550-afff-58e41ed3f40f.png">
+<img width="850" alt="image" src="https://user-images.githubusercontent.com/82705218/143269500-2b2fe398-358b-4550-afff-58e41ed3f40f.png">
 
 # Usage 
 To use the C# script files for FN-Tool, you can either download the zipped source files and run them in your IDE or create a new project in your IDE and move the ".cs" files to the project folder.
