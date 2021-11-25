@@ -13,7 +13,7 @@ To run FN-Tool, you must have either JetBrains Rider, Visual Studio 2022 or Visu
 
 ### Images 
 
-![image](https://user-images.githubusercontent.com/82705218/142464986-ac1b626f-b7af-4491-9c9f-f53692cb0ccc.png)
+<img width="850" alt="image" src="https://user-images.githubusercontent.com/82705218/143269500-2b2fe398-358b-4550-afff-58e41ed3f40f.png">
 
 ### Source Download
 
