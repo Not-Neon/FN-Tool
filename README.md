@@ -9,7 +9,8 @@ To use the C# script files for FN-Tool, you can either download the zipped sourc
 If your preferred IDE for running FN-Tool is Visual Studio, then do not use Visual Studio 2019. Instead use Visual Studio 2022, otherwise the project cannot run.
 
 
-<img width="250" alt="image" src="https://user-images.githubusercontent.com/82705218/143269568-3578bde4-c137-40fb-b3ad-06b6930a4172.png">
+<img width="250" alt="image" src="https://user-images.githubusercontent.com/82705218/143467218-171fd049-7eca-4a5b-9503-a8261e8911d0.png">
+
 
 # Credits
 FN-Tool is powered by Benbot API, Fortnite-API.com and FN-API.
