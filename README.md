@@ -12,7 +12,7 @@ If your preferred IDE for running FN-Tool is Visual Studio, then do not use Visu
 
 
 # Credits
-FN-Tool is powered by Benbot API, Fortnite-API.com and FN-API.
+FN-Tool is powered by Benbot API, Fortnite-API, FN-API and Nitestats.API.
 
 ### Authors and Contributors
 
