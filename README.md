@@ -18,4 +18,3 @@ FN-Tool is powered by Benbot API, Fortnite-API, FN-API and Nitestats.API.
 
 - [@NotNeonDEV](https://github.com/NotNeonDEV)
 - [@thoo0224](https://github.com/thoo0224)
-- [@sirvibegodlol](https://github.com/sirvibegodlol)
